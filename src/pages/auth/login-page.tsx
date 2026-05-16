@@ -1,6 +1,7 @@
 import { AuthLayout } from "@/components/layouts/auth-layout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { GoogleButton } from "@/components/ui/button-google";
 
 export const LoginPage = () => {
   return (
@@ -23,6 +24,8 @@ export const LoginPage = () => {
         <Button type="submit" size="lg" className="w-full">
           ĐĂNG NHẬP
         </Button>
+
+        <GoogleButton />
 
         <div className="text-center">
           <p className="text-center text-sm text-zinc-400">
