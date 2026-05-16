@@ -6,6 +6,7 @@ import { useSignInMutation } from "@/store/api/api-auth";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { GoogleButton } from "@/components/ui/button-google";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,8 @@ export const LoginPage = () => {
         <Button type="submit" size="lg" className="w-full">
           ĐĂNG NHẬP
         </Button>
+
+        <GoogleButton />
 
         <div className="text-center">
           <p className="text-center text-zinc-400 text-sm">
