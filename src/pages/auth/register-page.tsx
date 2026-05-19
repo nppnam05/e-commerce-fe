@@ -42,42 +42,42 @@ export const RegisterPage = () => {
     >
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <Input
-        variant="superBlack"
+          variant="superBlack"
           icon="👤"
           placeholder="Họ và tên"
           type="text"
           {...register("displayName")}
         />
         <Input
-        variant="superBlack"
+          variant="superBlack"
           icon="✉️"
           placeholder="Email"
           type="email"
           {...register("email")}
         />
         <Input
-        variant="superBlack"
+          variant="superBlack"
           icon="📍"
           placeholder="Địa chỉ"
           type="text"
           {...register("location")}
         />
         <Input
-        variant="superBlack"
+          variant="superBlack"
           icon="📱"
           placeholder="Số điện thoại"
           type="tel"
           {...register("phone")}
         />
         <Input
-        variant="superBlack"
+          variant="superBlack"
           icon="🔒"
           placeholder="Mật khẩu"
           type="password"
           {...register("password")}
         />
         <Input
-        variant="superBlack"
+          variant="superBlack"
           icon="🔒"
           placeholder="Xác nhận mật khẩu"
           type="password"
