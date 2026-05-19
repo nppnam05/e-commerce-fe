@@ -12,10 +12,11 @@ export const Button = ({
   className = "",
   ...props
 }: ButtonProps) => {
-  const baseStyles = "font-semibold rounded-2xl transition-all active:scale-95";
+  const baseStyles =
+    "font-semibold rounded-2xl transition-all active:scale-95 cursor-pointer";
 
   const variants = {
-    primary: "bg-white text-zinc-950 hover:bg-zinc-100",
+    primary: "bg-white text-zinc-950 hover:bg-zinc-100 border border-zinc-200",
     secondary: "bg-zinc-800 text-white hover:bg-zinc-700",
     outline: "border border-zinc-700 hover:border-zinc-500 text-white",
   };
@@ -28,7 +29,7 @@ export const Button = ({
 
   return (
     <button
-      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className} `}
       {...props}
     >
       {children}

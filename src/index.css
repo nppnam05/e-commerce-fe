@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+@theme {
+  --color-bg: #f2f0f1;
+  --color-bg-image: #fcfcfc;
+}
+
+.img-home-page {
+  /* Image in home page 2 */
+
+  position: absolute;
+  width: 100%;
+  height: auto;
+  /* width: 1440px;
+  height: 663px; */
+  left: 0px;
+  top: 134px;
+  /* z-index: -1; */
+
+  background: url(trendy-fashionable-couple-posing.jpg), #f2f0f1;
+}

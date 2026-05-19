@@ -28,6 +28,7 @@ export const LoginPage = () => {
     <AuthLayout title="Đăng nhập" subtitle="Chào mừng bạn trở lại" icon="🛒">
       <form className="space-y-6" onSubmit={handleLogin}>
         <Input
+        variant="superBlack"
           icon="👤"
           placeholder="Tên đăng nhập hoặc Email"
           type="email"
@@ -36,6 +37,7 @@ export const LoginPage = () => {
         />
 
         <Input
+         variant="superBlack"
           icon="🔒"
           placeholder="Mật khẩu"
           type="password"
