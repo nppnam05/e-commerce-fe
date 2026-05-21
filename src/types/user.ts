@@ -11,4 +11,5 @@ export interface User {
   createdOn: string;
   modifiedOn: string;
   modifiedBy: string;
+  deviceId: string
 }

@@ -1,0 +1,41 @@
+/**
+ * Safe localStorage utility functions that check if we're in a browser environment
+ */
+
+export const safeLocalStorage = {
+  getItem: (key: string): string | null => {
+    if (typeof window === "undefined") return null;
+    try {
+      return localStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  },
+
+  setItem: (key: string, value: string): void => {
+    if (typeof window === "undefined") return;
+    try {
+      localStorage.setItem(key, value);
+    } catch {
+      // Silently fail if localStorage is not available
+    }
+  },
+
+  removeItem: (key: string): void => {
+    if (typeof window === "undefined") return;
+    try {
+      localStorage.removeItem(key);
+    } catch {
+      // Silently fail if localStorage is not available
+    }
+  },
+
+  clear: (): void => {
+    if (typeof window === "undefined") return;
+    try {
+      localStorage.clear();
+    } catch {
+      // Silently fail if localStorage is not available
+    }
+  },
+};

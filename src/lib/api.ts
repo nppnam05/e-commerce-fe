@@ -46,6 +46,11 @@ export const customBaseQueryWithReauth: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result.error && result.error.status === 401) {
+    const url = typeof args === "string" ? args : args.url;
+    if (url && (url.includes("/auth/login") || url.includes("/auth/sign-up"))) {
+      return result;
+    }
+
     // If already refreshing, add to queue
     if (isRefreshing) {
       return new Promise((resolve, reject) => {
