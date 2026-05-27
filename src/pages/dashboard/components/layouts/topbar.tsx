@@ -11,10 +11,8 @@ export const TopBar = () => {
 
   return (
     <div className="flex items-center justify-between border-b border-gray-200 bg-white">
-      <div className="ms-15">
-        <div className="w-96">
-          <SearchComponent />
-        </div>
+      <div className="ms-15 w-96">
+        <SearchComponent />
       </div>
       <div className="me-15">
         <Button
