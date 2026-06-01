@@ -4,6 +4,11 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Select } from "./components/ui/select";
 import { ColorPicker } from "./components/ui/color-picker";
+import { useGetAllColorsQuery } from "@/store/api/api-color";
+import { useGetAllSizesQuery } from "@/store/api/api-size";
+import { useGetAllCategoriesQuery } from "@/store/api/api-category";
+import { ImageUpload } from "./components/ui/ImageUpload";
+import { useCreateProductMutation } from "@/store/api/api-product";
 
 interface ProductFormData {
   name: string;
@@ -23,6 +28,14 @@ export const ProductPage = ({ title }: { title: string }) => {
     size: "",
     color: "",
   });
+  const [uploadKey, setUploadKey] = useState(0);
+
+  const [images, setImages] = useState<File[]>([]);
+
+  const { data: colors = [] } = useGetAllColorsQuery();
+  const { data: sizes = [] } = useGetAllSizesQuery();
+  const { data: categories = [] } = useGetAllCategoriesQuery();
+  const [createProduct] = useCreateProductMutation();
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -40,26 +53,39 @@ export const ProductPage = ({ title }: { title: string }) => {
     setFormData((prev) => ({ ...prev, color }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Product Data:", formData);
-    alert("Sản phẩm đã được lưu thành công!");
+
+    const categoryId = Number(formData.category);
+    const sizeId = Number(formData.size);
+    const colorId = Number(
+      colors.find((c) => c.colorCode === formData.color)?.id,
+    );
+
+    try {
+      const data = await createProduct({
+        name: formData.name,
+        description: formData.description,
+        price: formData.price,
+        categoryId,
+        colorId,
+        sizeId,
+        images: images,
+      }).unwrap();
+      setFormData({
+        name: "",
+        description: "",
+        price: 0,
+        category: "",
+        size: "",
+        color: "",
+      });
+      setImages([]);
+      setUploadKey((prev) => prev + 1);
+    } catch (err) {
+      console.log(err);
+    }
   };
-
-  const categoryOptions = [
-    { value: "electronics", label: "Electronics" },
-    { value: "fashion", label: "Fashion" },
-    { value: "lifestyle", label: "Lifestyle" },
-    { value: "home", label: "Home & Kitchen" },
-  ];
-
-  const sizeOptions = [
-    { value: "S", label: "S" },
-    { value: "M", label: "M" },
-    { value: "L", label: "L" },
-    { value: "XL", label: "XL" },
-    { value: "XXL", label: "XXL" },
-  ];
 
   return (
     <DashboardPageLayout title={title}>
@@ -107,7 +133,10 @@ export const ProductPage = ({ title }: { title: string }) => {
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                options={categoryOptions}
+                options={categories.map((category) => ({
+                  value: category.id,
+                  label: category.name,
+                }))}
                 required
               />
 
@@ -116,7 +145,10 @@ export const ProductPage = ({ title }: { title: string }) => {
                 name="size"
                 value={formData.size}
                 onChange={handleChange}
-                options={sizeOptions}
+                options={sizes.map((size) => ({
+                  value: size.id,
+                  label: size.name,
+                }))}
                 required
               />
             </div>
@@ -125,12 +157,20 @@ export const ProductPage = ({ title }: { title: string }) => {
               label="Màu sắc"
               value={formData.color}
               onChange={handleColorChange}
+              colors={colors.map((color) => color.colorCode)}
+            />
+
+            <ImageUpload
+              key={uploadKey}
+              label="Hình ảnh sản phẩm"
+              onChange={(files) => setImages(files)}
             />
 
             <div className="flex gap-4 pt-6">
               <Button
                 size="md"
                 className="flex-1"
+                type="button"
                 onClick={() => window.history.back()}
               >
                 Cancel
@@ -138,6 +178,7 @@ export const ProductPage = ({ title }: { title: string }) => {
               <Button
                 size="md"
                 variant="custom"
+                type="submit"
                 className="flex-1 bg-blue-600 text-white hover:bg-blue-700"
               >
                 Save

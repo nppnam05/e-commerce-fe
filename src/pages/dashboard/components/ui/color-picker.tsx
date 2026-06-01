@@ -2,15 +2,12 @@ interface ColorPickerProps {
   label: string;
   value: string;
   onChange: (color: string) => void;
+  colors: string[];
 }
 
-const colors = [
-  "#ef4444", "#f97316", "#eab308", "#22c55e", 
-  "#06b6d4", "#3b82f6", "#6366f1", "#8b5cf6", 
-  "#ec4899", "#f43f5e"
-];
 
-export const ColorPicker = ({ label, value, onChange }: ColorPickerProps) => {
+
+export const ColorPicker = ({ label, value, onChange, colors }: ColorPickerProps) => {
   return (
     <div>
       <label className="block text-sm font-medium text-gray-700 mb-2">
