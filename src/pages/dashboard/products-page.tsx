@@ -35,7 +35,7 @@ export const ProductsPage = () => {
     <div>
       <TopBar searchValue={search} onSearchChange={setSearch} />
       <DashboardPageLayout title="Products">
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-6 py-4">
           {products.map((pro) => {
             return (
               <ProductCard
