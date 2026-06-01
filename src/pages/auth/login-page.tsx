@@ -31,7 +31,11 @@ export const LoginPage = () => {
         safeLocalStorage.setItem("deviceId", result.deviceId);
         setCookie("deviceId", result.deviceId, 365);
         dispatch(login(result));
-        navigate("/home");
+        if (result.roleName === "ADMIN") {
+          navigate("/dashboard");
+        } else {
+          navigate("/home");
+        }
       }
     } catch (err) {
       // Bỏ qua hoặc xử lý lỗi nếu cần thiết

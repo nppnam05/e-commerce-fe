@@ -5,3 +5,11 @@ export interface BaseResponse<T = any> {
   data: T | null;
   errors: any;
 }
+
+export interface PaginatedResponse<T = any> {
+  pageNumber: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+  data: T[];
+}

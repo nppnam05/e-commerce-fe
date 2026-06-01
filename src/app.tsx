@@ -13,7 +13,7 @@ import { ProductPage } from "./pages/dashboard/product-page";
 export const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" />} />
+      <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route element={<AppLayout />}>

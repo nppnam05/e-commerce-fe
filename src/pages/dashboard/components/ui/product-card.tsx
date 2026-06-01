@@ -17,7 +17,15 @@ export const ProductCard = ({
   return (
     <div className="rounded-2xl bg-white p-3">
       <div className="">
-        <img src={img} alt={name} className="rounded-xl object-cover" />
+        <img
+          src={img}
+          alt={name}
+          className="rounded-xl object-cover"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = "https://placehold.co/600x400?text=No+Image";
+          }}
+        />
       </div>
       <div className="mt-5">
         <h1 className="text-xl font-semibold">{name}</h1>

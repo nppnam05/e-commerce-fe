@@ -3,19 +3,21 @@ import { ContainerTotal } from "./components/ui/container-total";
 import iconTotalOrder from "@/assets/images/total-order.png";
 import iconTotalSale from "@/assets/images/total-sale.png";
 import iconTotalPending from "@/assets/images/total-peding.png";
+import { useGetTotalDashboardQuery } from "@/store/api/admin";
 
 export const MainPage = () => {
+  const { data } = useGetTotalDashboardQuery();
   return (
     <DashboardPageLayout title="Dashboard">
       <div className="flex gap-6">
         <ContainerTotal
           title="Total User"
-          value={40689}
+          value={data?.totalUsers || 0}
           bgColor="bg-[#E0DFFF]"
         />
         <ContainerTotal
           title="Total Order"
-          value={40689}
+          value={data?.totalOrders || 0}
           bgColor="bg-[#FEEFCC]"
           icon={
             <img
@@ -27,7 +29,7 @@ export const MainPage = () => {
         />
         <ContainerTotal
           title="Total Sale"
-          value={40689}
+          value={data?.totalSales || 0}
           bgColor="bg-[#C4F4DC]"
           icon={
             <img
@@ -39,7 +41,7 @@ export const MainPage = () => {
         />
         <ContainerTotal
           title="Total Pending"
-          value={40689}
+          value={data?.totalPending || 0}
           bgColor="bg-[#FFDCCF]"
           icon={
             <img
