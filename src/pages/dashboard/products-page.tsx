@@ -50,7 +50,7 @@ export const ProductsPage = () => {
         </div>
         <Pagination
           currentPage={currentPage}
-          totalPages={data?.totalPages}
+          totalPages={data?.totalPages ?? 1}
           onPageChange={handlePageChange}
         ></Pagination>
       </DashboardPageLayout>

@@ -32,7 +32,7 @@ export const authApi = createApi({
         if (response.succeeded && response.data) {
           return response.data;
         }
-        return null;
+        throw new Error(response.message ?? "Sign in failed");
       },
       invalidatesTags: ["Auth", { type: "UserProfile" }],
     }),
@@ -47,7 +47,7 @@ export const authApi = createApi({
         if (response.succeeded && response.data) {
           return response.data;
         }
-        return null;
+        throw new Error(response.message ?? "Registration failed");
       },
     }),
   }),

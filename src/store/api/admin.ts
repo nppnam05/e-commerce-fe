@@ -17,7 +17,7 @@ export const adminApi = createApi({
                 if (response.succeeded && response.data) {
                     return response.data;
                 }
-                return null;
+                throw new Error(response.message ?? "Failed to fetch dashboard data");
             },
         }),
     }),
