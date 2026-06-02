@@ -63,7 +63,7 @@ export const ProductPage = ({ title }: { title: string }) => {
     );
 
     try {
-      const data = await createProduct({
+      await createProduct({
         name: formData.name,
         description: formData.description,
         price: formData.price,
