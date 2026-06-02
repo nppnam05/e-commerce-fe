@@ -1,7 +1,7 @@
 import { SearchComponent } from "@/components/ui/search-component";
 import { DashboardPageLayout } from "./components/layouts/dashboardpage-layout";
 import { ProductTable } from "./components/ui/product-stock-table";
-import type { ProductStock } from "@/types/product";
+import type { ProductStock } from "@/types/product-stock";
 import { Pagination } from "@/components/ui/pagination";
 import { useState } from "react";
 import { StockEditModal } from "./components/ui/stock-edit-modal";
@@ -9,7 +9,7 @@ import { StockEditModal } from "./components/ui/stock-edit-modal";
 const sampleProducts = [
   {
     id: 1,
-    image: "https://i.imgur.com/8Z2v8zL.png",
+    images: ["https://i.imgur.com/8Z2v8zL.png"],
     name: "Apple Watch Series 4",
     category: "Digital Product",
     price: 690.0,
@@ -18,7 +18,7 @@ const sampleProducts = [
   },
   {
     id: 2,
-    image: "https://i.imgur.com/2f3vXjK.png",
+    images: ["https://i.imgur.com/2f3vXjK.png"],
     name: "Microsoft Headsquare",
     category: "Digital Product",
     price: 190.0,

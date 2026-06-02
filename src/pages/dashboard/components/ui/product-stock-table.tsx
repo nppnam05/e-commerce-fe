@@ -1,4 +1,4 @@
-import type { ProductStock } from "@/types/product";
+import type { ProductStock } from "@/types/product-stock";
 import { Edit2, Trash2 } from "lucide-react";
 
 interface ProductTableProps {
@@ -57,7 +57,7 @@ export const ProductTable = ({
                 <td className="px-6 py-4">
                   <div className="h-14 w-14 overflow-hidden rounded-xl border border-gray-200 bg-gray-100">
                     <img
-                      src={product.image}
+                      src={product.images[0]}
                       alt={product.name}
                       className="h-full w-full object-cover"
                     />

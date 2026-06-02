@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { ProductStock } from "@/types/product";
+import type { ProductStock } from "@/types/product-stock";
 
 interface StockEditModalProps {
   product: ProductStock | null;
@@ -51,7 +51,7 @@ export const StockEditModal = ({
           <div className="flex gap-4">
             <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-2xl border border-gray-200 bg-gray-100">
               <img
-                src={product.image}
+                src={product.images[0]}
                 alt={product.name}
                 className="h-full w-full object-cover"
               />
