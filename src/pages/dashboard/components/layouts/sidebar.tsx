@@ -51,14 +51,14 @@ export const Sidebar = () => {
       >
         <div className="flex items-center gap-2 overflow-hidden whitespace-nowrap">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-blue-600">
-            <span className="text-xl font-bold text-white">D</span>
+            <span className="text-xl font-bold text-white">CO</span>
           </div>
           <span
             className={`text-2xl font-bold text-gray-900 transition-opacity duration-200 ${
               isCollapsed ? "w-0 opacity-0" : "opacity-100"
             }`}
           >
-            DashStack
+            SHOP.CO
           </span>
         </div>
       </div>

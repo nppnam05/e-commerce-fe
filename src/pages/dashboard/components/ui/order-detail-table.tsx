@@ -1,9 +1,8 @@
-import type { ProductStock } from "@/types/product-stock";
-import { Edit2 } from "lucide-react";
+import type { ProductOrder } from "@/types/product";
+import { formatVND } from "@/utils/format";
 
 interface ProductTableProps {
-  products: ProductStock[];
-  onEdit: (product: ProductStock) => void;
+  products: ProductOrder[];
 }
 
 const ColorDot = ({ color }: { color: string }) => (
@@ -13,7 +12,7 @@ const ColorDot = ({ color }: { color: string }) => (
   />
 );
 
-export const ProductTable = ({ products, onEdit }: ProductTableProps) => {
+export const ProductOrderDetailTable = ({ products }: ProductTableProps) => {
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white">
       <div className="overflow-x-auto">
@@ -39,10 +38,7 @@ export const ProductTable = ({ products, onEdit }: ProductTableProps) => {
                 Size
               </th>
               <th className="px-6 py-5 text-left text-sm font-medium text-gray-500">
-                Available Color
-              </th>
-              <th className="w-28 px-6 py-5 text-center text-sm font-medium text-gray-500">
-                Action
+                Color
               </th>
             </tr>
           </thead>
@@ -74,7 +70,7 @@ export const ProductTable = ({ products, onEdit }: ProductTableProps) => {
                 <td className="px-6 py-4 text-gray-600">{product.category}</td>
 
                 <td className="px-6 py-4 font-semibold text-gray-900">
-                  ${product.price.toFixed(2)}
+                  ${formatVND(product.price)}
                 </td>
 
                 <td className="px-6 py-4 font-medium text-gray-700">
@@ -87,18 +83,7 @@ export const ProductTable = ({ products, onEdit }: ProductTableProps) => {
 
                 <td className="px-6 py-4">
                   <div className="flex gap-2">
-                    <ColorDot color={product.color} />
-                  </div>
-                </td>
-
-                <td className="px-6 py-4">
-                  <div className="flex items-center justify-center gap-3">
-                    <button
-                      onClick={() => onEdit(product)}
-                      className="rounded-lg p-2 text-blue-600 transition-colors hover:bg-blue-50"
-                    >
-                      <Edit2 size={18} />
-                    </button>
+                    <ColorDot color={product.colorCode} />
                   </div>
                 </td>
               </tr>

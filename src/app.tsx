@@ -9,6 +9,8 @@ import { ProductsPage } from "./pages/dashboard/products-page";
 import { OrderPage } from "./pages/dashboard/order-page";
 import { StockPage } from "./pages/dashboard/stock-page";
 import { ProductPage } from "./pages/dashboard/product-page";
+import { EditProductPage } from "./pages/dashboard/update-product-page";
+import { OrderDetailPage } from "./pages/dashboard/order-detail-page";
 
 export const App = () => {
   return (
@@ -29,9 +31,10 @@ export const App = () => {
           element={<ProductPage title="Add Product" />}
         />
         <Route
-          path="/dashboard/product/:id"
-          element={<ProductPage title="Edit Product" />}
+          path="/dashboard/update-product/:id"
+          element={<EditProductPage />}
         />
+        <Route path="/dashboard/order/:id" element={<OrderDetailPage />} />
       </Route>
       <Route
         path="*"
