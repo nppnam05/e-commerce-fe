@@ -8,7 +8,7 @@ interface StockEditModalProps {
   product: ProductStock | null;
   isOpen: boolean;
   onClose: () => void;
-  onSave: (id: number, newPiece: number) => void;
+  onSave: (id: number, newQuantity: number) => void;
 }
 
 export const StockEditModal = ({
@@ -17,18 +17,18 @@ export const StockEditModal = ({
   onClose,
   onSave,
 }: StockEditModalProps) => {
-  const [pieceValue, setPieceValue] = useState(0);
+  const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
     if (product) {
-      setPieceValue(product.stock);
+      setQuantity(product.quantity);
     }
   }, [product]);
 
   if (!isOpen || !product) return null;
 
   const handleSave = () => {
-    onSave(product.id, pieceValue);
+    onSave(product.id, quantity);
     onClose();
   };
 
@@ -51,7 +51,7 @@ export const StockEditModal = ({
           <div className="flex gap-4">
             <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-2xl border border-gray-200 bg-gray-100">
               <img
-                src={product.images[0]}
+                src={product.imageUrls[0]}
                 alt={product.name}
                 className="h-full w-full object-cover"
               />
@@ -68,8 +68,8 @@ export const StockEditModal = ({
           <Input
             label="Số lượng (Piece)"
             type="number"
-            value={pieceValue}
-            onChange={(e) => setPieceValue(Number(e.target.value))}
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
             min={0}
             className="text-center text-2xl font-semibold"
           />

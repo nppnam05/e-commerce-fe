@@ -4,12 +4,17 @@ import iconTotalOrder from "@/assets/images/total-order.png";
 import iconTotalSale from "@/assets/images/total-sale.png";
 import iconTotalPending from "@/assets/images/total-peding.png";
 import { useGetTotalDashboardQuery } from "@/store/api/admin";
+import { SalesChart } from "./components/ui/sales-chart";
+import { useGetMonthlyRevenueQuery } from "@/store/api/api-order";
 
 export const MainPage = () => {
   const { data } = useGetTotalDashboardQuery();
+  const { data: monthlyRevenue } = useGetMonthlyRevenueQuery();
+
+
   return (
     <DashboardPageLayout title="Dashboard">
-      <div className="flex gap-6">
+      <div className="mb-8 flex gap-6">
         <ContainerTotal
           title="Total User"
           value={data?.totalUsers || 0}
@@ -51,6 +56,9 @@ export const MainPage = () => {
             />
           }
         />
+      </div>
+      <div className="w-full">
+        <SalesChart data={monthlyRevenue} />
       </div>
     </DashboardPageLayout>
   );

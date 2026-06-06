@@ -3,7 +3,8 @@ export interface ProductStock {
   name: string;
   category: string;
   price: number;
-  stock: number;
-  colors: string[];
-  images: string[];
+  quantity: number;
+  size: string;
+  color: string;
+  imageUrls: string[];
 }
