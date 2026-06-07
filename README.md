@@ -1,63 +1,121 @@
 # E-Commerce Frontend
 
-A modern, high-performance E-commerce frontend built with React 19, Vite, and Redux Toolkit. This project focuses on a clean architecture, premium UI/UX, and robust state management.
+A modern, high-performance e-commerce frontend built with React 19, Vite, and Redux Toolkit.
+Focused on clean architecture, premium UI/UX, and robust state management.
 
-## 🚀 Description
+## 🎯 Features
 
-This is the frontend application for a comprehensive E-commerce platform. It features a secure authentication system with JWT handling (including silent refresh and auto-login), a responsive layout designed with modern aesthetics, and a modular architecture that separates UI components from business logic and API interactions.
+- **Authentication**
+  - JWT token handling with automatic refresh
+  - Google OAuth2 login
+  - Silent refresh and auto-login on app launch
+  - HttpOnly Cookies (XSS protection)
 
-## 📂 Folder Structure
+- **State Management**
+  - Redux Toolkit for global UI state
+  - RTK Query for API data fetching & caching
+  - Modular slice architecture
 
-```text
+- **UI/UX**
+  - Dark-mode first with glassmorphism design
+  - Responsive layout (mobile, tablet, desktop)
+  - Smooth animations and transitions
+
+- **Type Safety**
+  - Full TypeScript integration
+  - End-to-end type safety (API ↔ UI)
+
+## 🛠️ Tech Stack
+
+- **Core:** React 19
+- **Build Tool:** Vite
+- **State Management:** Redux Toolkit + RTK Query
+- **Styling:** Tailwind CSS v4
+- **Routing:** React Router 7
+- **Form Handling:** React Hook Form
+- **Language:** TypeScript
+
+## 📂 Project Structure
+
+```
 src/
-├── assets/             # Static assets like images and icons
-├── components/         # Reusable React components
-│   ├── layouts/        # Page layout wrappers (e.g., AuthLayout)
-│   └── ui/             # Atomic/Primitive UI components (Button, Input)
-├── lib/                # Shared utilities and configurations (API client, helpers)
-├── pages/              # Page components grouped by feature
-│   └── auth/           # Authentication pages (Login, Register)
-├── store/              # Global state management
-│   ├── api/            # RTK Query API definitions (Request/Response contracts)
-│   ├── slices/         # Redux Slices (Local state management)
-│   └── index.ts        # Store configuration
-├── types/              # Global TypeScript interfaces and type definitions
-├── app.tsx             # Main application component & Routing
-└── main.tsx            # Entry point
+├── assets/         # Static assets
+├── components/     # Reusable components
+│   ├── layouts/    # Page layout wrappers
+│   └── ui/         # Atomic UI components
+├── lib/            # API client, helpers, configs
+├── pages/          # Feature-based page components
+│   ├── auth/       # Login, Register
+│   ├── products/   # Product listing, details
+│   └── checkout/   # Cart, Orders
+├── store/          # Redux store
+│   ├── api/        # RTK Query API definitions
+│   ├── slices/     # Redux slices
+│   └── index.ts    # Store setup
+├── types/          # Global TypeScript types
+├── app.tsx         # Main App & routing
+└── main.tsx        # Entry point
 ```
 
-## 🛠 Tech Stack
+## 📋 Prerequisites
 
-- **Core:** [React 19](https://react.dev/)
-- **Build Tool:** [Vite](https://vitejs.dev/)
-- **State Management:** [Redux Toolkit](https://redux-toolkit.js.org/) & [RTK Query](https://redux-toolkit.js.org/rtk-query/overview)
-- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
-- **Routing:** [React Router 7](https://reactrouter.com/)
-- **Form Handling:** [React Hook Form](https://react-hook-form.com/)
-- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- Node.js v18+
+- Backend API running (see [e-commerce-be](https://github.com/nppnam05/e-commerce-be))
 
+## 🚀 Getting Started
 
-## ⚙️ Common Commands
+1. **Clone & Install**
+```bash
+git clone https://github.com/nppnam05/e-commerce-fe.git
+cd e-commerce-fe
+npm install
+```
 
-In the project directory, you can run:
+2. **Start Development Server**
+```bash
+npm run dev
+```
+Open http://localhost:5173 in your browser.
 
-### `npm run dev`
-Runs the app in the development mode.  
-Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
+## ⚙️ Available Commands
 
-### `npm run build`
-Builds the app for production to the `dist` folder.  
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm run dev        # Start dev server
+npm run build      # Build for production
+npm run preview    # Preview production build
+npm run lint       # Run ESLint
+npm run lint:fix   # Fix ESLint issues
+```
 
-### `npm run lint`
-Runs ESLint to find and fix problems in your codebase.
+## 🏗️ Architecture Highlights
 
-### `npm run preview`
-Locally preview the production build.
+**Authentication Flow:**
+1. User logs in → Backend returns JWT tokens stored in HttpOnly Cookies
+2. Access token expires → Silent refresh automatically
+3. App launch → Check valid session, auto-login if exists
+4. Logout → Revoke session on backend
 
-## 🔑 Key Features
+**State Management Pattern:**
+- Redux Slices → Local UI state (loading, filters, modals)
+- RTK Query → Server state (products, orders, user data)
 
-- **Advanced Auth Flow:** Secure JWT handling with interceptors for token expiration, automatic token refresh, and persistent sessions.
-- **Strict Typing:** Full TypeScript integration for end-to-end type safety between the API layer and the UI.
-- **Modern UI:** Built with a "dark-mode first" aesthetic using glassmorphism and subtle animations.
-- **Modular Design:** Clear separation between "Form Values" (UI data) and "API Requests" (Backend data) to maintain clean architectural boundaries.
+## 🚢 Deployment
+
+```bash
+npm run build
+docker build -t e-commerce-fe:latest .
+docker run -p 3000:80 e-commerce-fe:latest
+```
+
+**Live Demo:** http://nam23211.id.vn:3000
+
+## 🔗 Related Projects
+
+- [Backend API](https://github.com/nppnam05/e-commerce-be)
+- [Database Schema](https://github.com/nppnam05/e-commerce-database)
+
+## 👨‍💻 Author
+
+**Nguyen Pham Phuong Nam**
+- GitHub: [@nppnam05](https://github.com/nppnam05)
+- Email: nppnam05@gmail.com
