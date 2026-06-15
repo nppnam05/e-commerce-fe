@@ -16,6 +16,10 @@ export const AccountInfoPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [updateProfile] = useUpdateProfileMutation();
 
+  if (!user || !formData) {
+    return null;
+  }
+
   const handleSave = async () => {
     const profileData: UpdateProfileRequest = {
       email: formData.email,

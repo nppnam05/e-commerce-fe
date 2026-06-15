@@ -12,7 +12,7 @@ import {
 import { page } from "@/constant/paginate";
 import { Pagination } from "@/components/ui/pagination";
 import type { Address } from "@/types/address";
-import { AddressFormModal } from "./components/ui/address-form";
+import { AddressFormModal, type AddressForm } from "./components/ui/address-form";
 
 export const AddressPage = () => {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -40,11 +40,12 @@ export const AddressPage = () => {
     deleteAddress({ addressId: id });
   };
 
-  const handleSave = (data: Address) => {
+  const handleSave = (data: AddressForm) => {
+    if (!user) return;
     if (editingAddress) {
       updateAddress({ data: { ...editingAddress, ...data } });
     } else {
-      createAddress({ userId: user.id, data: { ...data } });
+      createAddress({ userId: user.id, data: { ...data } as any });
     }
     setModalOpen(false);
   };
@@ -53,13 +54,16 @@ export const AddressPage = () => {
     setCurrentPage(page);
   };
 
-  const { data } = useGetAddressesByUserIdQuery({
-    userId: user.id,
-    params: {
-      pageNumber: currentPage,
-      pageSize: page.pageSize,
+  const { data } = useGetAddressesByUserIdQuery(
+    {
+      userId: user?.id || "",
+      params: {
+        pageNumber: currentPage,
+        pageSize: page.pageSize,
+      },
     },
-  });
+    { skip: !user },
+  );
 
   const addresses = data?.data || [];
 

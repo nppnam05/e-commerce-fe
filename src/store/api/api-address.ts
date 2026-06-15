@@ -1,7 +1,7 @@
 import { customBaseQueryWithReauth } from "@/lib/api";
 import type { Address } from "@/types/address";
 import type { BaseResponse, PaginatedResponse } from "@/types/response";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 
 interface GetAllAddress {
   pageNumber?: number;

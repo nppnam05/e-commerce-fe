@@ -29,13 +29,16 @@ export const FavoritePage = () => {
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
-  const { data } = useGetFavoriteByUserIdQuery({
-    userId: user.id,
-    params: {
-      pageNumber: currentPage,
-      pageSize: 6,
+  const { data } = useGetFavoriteByUserIdQuery(
+    {
+      userId: user?.id || "",
+      params: {
+        pageNumber: currentPage,
+        pageSize: 6,
+      },
     },
-  });
+    { skip: !user },
+  );
   const favoriteItems = data?.data || [];
 
   return (
