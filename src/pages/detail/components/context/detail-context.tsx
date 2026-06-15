@@ -32,15 +32,6 @@ export function DetailProvider({ children }: DetailProviderParam) {
 
   const [countOrdered, setCountOrdered] = useState(1);
 
-  function handleIncreaseOrder() {
-    setCountOrdered((order) => order + 1);
-  }
-
-  function handleDecreaseOrder() {
-    if (countOrdered == 1) return;
-    setCountOrdered((order) => order - 1);
-  }
-
   function handleOrder() {}
 
   const {

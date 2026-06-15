@@ -3,10 +3,8 @@ import { DropdownButton } from "@/components/ui/dropdown-button";
 import { SlidersVertical } from "lucide-react";
 import Comment from "./comment";
 import { HomeItemsSection } from "@/pages/home/components/ui/home-items-section";
-import aoThun from "@/assets/images/ao_thun.jpg";
 import { useContext } from "react";
 import { DetailContext } from "../context/detail-context";
-import { productApi } from "@/store/api/api-product";
 
 const fakeData = {
   name: "Alaka",
@@ -16,14 +14,6 @@ const fakeData = {
   countStar: 5,
 };
 const fakeDatas = Array.from(Array(6), () => fakeData);
-
-const fakeItem = {
-  image: aoThun,
-  name: "ao thun",
-  price: 10000,
-  stars: 3.2,
-};
-const items = Array.from(Array(4), () => fakeItem);
 
 export default function RatingAndReviewSection() {
   const context = useContext(DetailContext);
