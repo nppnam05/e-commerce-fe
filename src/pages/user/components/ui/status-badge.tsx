@@ -1,4 +1,4 @@
-import { STATUS } from "@/constant/status";
+import { STATUS_TEXT } from "@/constant/status";
 
 export const StatusBadge = ({ status }: { status: string }) => {
   const styles = {
@@ -13,7 +13,7 @@ export const StatusBadge = ({ status }: { status: string }) => {
     <span
       className={`inline-block rounded-full px-4 py-1.5 text-sm font-medium ${styles[status as keyof typeof styles] || ""}`}
     >
-      {STATUS[status as keyof typeof STATUS] || status}
+      {STATUS_TEXT[status as keyof typeof STATUS_TEXT] || status}
     </span>
   );
 };

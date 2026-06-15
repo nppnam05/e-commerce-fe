@@ -16,13 +16,13 @@ export const AuthLayout = ({
   maxWidth = "max-w-sm",
 }: AuthLayoutProps) => {
   return (
-    <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-6 font-sans relative overflow-hidden">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-zinc-950 p-6 font-sans">
       <div className="absolute inset-0 bg-[radial-gradient(at_center,#52525b_0%,transparent_60%)]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(at_top_right,#3f3f46_0%,transparent_50%)]"></div>
 
       <div className={`w-full ${maxWidth} relative z-10`}>
-        <div className="flex justify-center mb-10">
-          <div className="w-20 h-20 rounded-3xl bg-zinc-900 border border-zinc-700 flex items-center justify-center shadow-2xl shadow-black/70">
+        <div className="mb-10 flex justify-center">
+          <div className="flex h-20 w-20 items-center justify-center rounded-3xl border border-zinc-700 bg-zinc-900 shadow-2xl shadow-black/70">
             {typeof icon === "string" ? (
               <span className="text-5xl">{icon}</span>
             ) : (
@@ -31,22 +31,18 @@ export const AuthLayout = ({
           </div>
         </div>
 
-        <div className="bg-zinc-900/80 backdrop-blur-xl border border-zinc-700 rounded-3xl p-8 shadow-2xl">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-semibold text-white tracking-tight">
+        <div className="rounded-3xl border border-zinc-700 bg-zinc-900/80 p-8 shadow-2xl backdrop-blur-xl">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-semibold tracking-tight text-white">
               {title}
             </h1>
             {subtitle && (
-              <p className="text-zinc-400 mt-2 text-sm">{subtitle}</p>
+              <p className="mt-2 text-sm text-zinc-400">{subtitle}</p>
             )}
           </div>
 
           {children}
         </div>
-
-        <p className="text-center text-zinc-500 text-xs mt-8">
-          Bảo mật • An toàn • Nhanh chóng
-        </p>
       </div>
     </div>
   );

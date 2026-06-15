@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 interface RegisterFormValues {
   displayName: string;
   email: string;
-  location: string;
   phone: string;
   password: string;
   confirmPassword: string;
@@ -54,13 +53,6 @@ export const RegisterPage = () => {
           placeholder="Email"
           type="email"
           {...register("email")}
-        />
-        <Input
-          variant="superBlack"
-          icon="📍"
-          placeholder="Địa chỉ"
-          type="text"
-          {...register("location")}
         />
         <Input
           variant="superBlack"

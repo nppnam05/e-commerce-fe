@@ -1,10 +1,9 @@
 export interface User {
   id: string;
-  userName: string;
   email: string;
   displayName: string;
   phone: string;
-  status: string;
+  avatar: string;
   roleName: string;
-  deviceId: string
+  deviceId?: string
 }
