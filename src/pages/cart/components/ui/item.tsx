@@ -1,4 +1,3 @@
-import aoThun from "@/assets/images/ao_thun.jpg";
 import { CountSelector } from "@/components/ui/count-selector";
 import type { ValueChanged } from "@/types/value-change";
 import type { VoidCallBack } from "@/types/void-call-back";
@@ -26,7 +25,7 @@ export default function Item({
   onDelete,
   onCountChange,
 }: ItemWithAction) {
-  const { id, image, name, size, color, price, value } = { ...item };
+  const { image, name, size, color, price, value } = { ...item };
   return (
     <div className="flex h-fit w-full flex-row">
       <img

@@ -1,8 +1,7 @@
 import { DropdownButton } from "@/components/ui/dropdown-button";
-import aoThun from "@/assets/images/ao_thun.jpg";
 import { ListItem } from "@/components/ui/list-item";
 import { RowDivident } from "@/components/ui/row-divident";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import type { VoidCallBack } from "@/types/void-call-back";
 import { SlidersVertical } from "lucide-react";
 import PaginationController from "./pagination-controller";
@@ -11,13 +10,6 @@ import { CategoryContext } from "../context/category-context";
 interface ListItemParam extends React.HtmlHTMLAttributes<HTMLDivElement> {
   onEnableFilter?: VoidCallBack;
 }
-
-const fakeItem = {
-  image: aoThun,
-  name: "ao thun",
-  price: 10000,
-  stars: 3.2,
-};
 
 export default function CategoryContent({
   className,

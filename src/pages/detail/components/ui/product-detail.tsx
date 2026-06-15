@@ -1,4 +1,3 @@
-import aoThun from "@/assets/images/ao_thun.jpg";
 import { BadgeSelector } from "@/components/ui/badge-selector";
 import { Button } from "@/components/ui/button";
 import { ColorPallete, type ColorInput } from "@/components/ui/color-pallete";
