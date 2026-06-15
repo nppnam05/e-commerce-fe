@@ -7,14 +7,13 @@
 //   Tooltip,
 //   ResponsiveContainer,
 // } from "recharts";
-import { formatVND } from "@/utils/format";
 import type { MonthlyRevenueResponse } from "@/types/monthly-revenue";
 
 interface SalesChartProps {
   data?: MonthlyRevenueResponse[];
 }
 
-export const SalesChart = ({ data = [] }: SalesChartProps) => {
+export const SalesChart = (_props: SalesChartProps) => {
   return <></>;
   // return (
   //   <div className="w-full rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">

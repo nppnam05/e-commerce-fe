@@ -2,8 +2,6 @@ import {
   BreadcrumbNavigation,
   type BreadcrumbItem,
 } from "@/components/ui/breadcrumb-navigation";
-import Item from "./components/ui/item";
-import { useState } from "react";
 import ListItem, { type ListItemInput } from "./components/ui/list-item";
 import aoThun from "@/assets/images/ao_thun.jpg";
 import SumaryPrice from "./components/ui/sumary-price";

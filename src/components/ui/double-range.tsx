@@ -3,9 +3,7 @@ import { useState } from "react";
 export function DoubleRange() {
   const [value1, setValue1] = useState(0);
   const [value2, setValue2] = useState(100);
-  const [range, setRange] = useState(10);
-
-  const percent1 = 100 / value1;
+  const [range] = useState(10);
 
   function handleChangeValue1(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();

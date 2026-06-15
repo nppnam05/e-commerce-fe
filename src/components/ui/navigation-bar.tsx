@@ -1,5 +1,4 @@
 import { Menu, Search } from "lucide-react";
-import { Menu, Search } from "lucide-react";
 import { DropdownButton } from "./dropdown-button";
 import { Input } from "./input";
 import Cart from "@/assets/svgs/cart.svg?react";
@@ -25,6 +24,14 @@ export function NavigationBar() {
       navigate("/login");
     }
   };
+
+  const handleShopClick = () => {
+    navigate("/home");
+  };
+  const handleCartClick = () => {
+    navigate("/cart");
+  };
+
   const [isShowDrawerBar, setIsShowDrawerBar] = useState(true);
   const [isShowSearchBar, setIsShowSearchBar] = useState(true);
   const [search, setSearch] = useState("");
@@ -51,7 +58,12 @@ export function NavigationBar() {
             className="inline cursor-pointer stroke-3 md:hidden"
             onClick={handleToggleDrawerBar}
           />
-          <span className="cursor-pointer text-4xl font-bold">SHOP.CO</span>
+          <span
+            className="cursor-pointer text-4xl font-bold"
+            onClick={handleShopClick}
+          >
+            SHOP.CO
+          </span>
         </div>
         <DropdownButton name="Shop" className="hidden md:inline">
           <div className="h-7 w-3xs">hello</div>
@@ -67,7 +79,7 @@ export function NavigationBar() {
         </span>
         <span className="hidden md:inline">
           <Input
-            icon=<Search width={30} />
+            icon={<Search width={30} />}
             placeholder="Search"
             variant="primary"
             value={search}
@@ -80,26 +92,30 @@ export function NavigationBar() {
             className="inline cursor-pointer md:hidden"
             onClick={handleToggleSearchBar}
           />
-          <Cart width={30} className="cursor-pointer" />
-          {isAuthenticated ? (
-          <Avatar
-            src={user?.avatar}
-            name={user?.displayName}
-            onClick={() => handleAvatarClick()}
-          />
-        ) : (
-          <Profile
+          <Cart
             width={30}
             className="cursor-pointer"
-            onClick={() => handleAvatarClick()}
+            onClick={handleCartClick}
           />
-        )}
+          {isAuthenticated ? (
+            <Avatar
+              src={user?.avatar}
+              name={user?.displayName}
+              onClick={() => handleAvatarClick()}
+            />
+          ) : (
+            <Profile
+              width={30}
+              className="cursor-pointer"
+              onClick={() => handleAvatarClick()}
+            />
+          )}
         </div>
       </div>
       {isShowSearchBar && (
         <div className="block px-4 md:hidden">
           <Input
-            icon=<Search width={30} />
+            icon={<Search width={30} />}
             placeholder="Search"
             variant="primary"
             className="my-2"
