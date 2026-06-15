@@ -11,7 +11,6 @@ interface SignInRequest {
 interface RegisterRequest {
   displayName: string;
   email: string;
-  location: string;
   phone: string;
   password: string;
 }

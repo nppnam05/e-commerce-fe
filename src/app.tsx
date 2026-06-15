@@ -11,39 +11,62 @@ import { StockPage } from "./pages/dashboard/stock-page";
 import { ProductPage } from "./pages/dashboard/product-page";
 import { EditProductPage } from "./pages/dashboard/update-product-page";
 import { OrderDetailPage } from "./pages/dashboard/order-detail-page";
+import { ProfileLayout } from "./pages/user/components/layout/profile-layout";
+import { FavoritePage } from "./pages/user/favorite-page";
+import { AddressPage } from "./pages/user/addresses-page";
+import { AccountInfoPage } from "./pages/user/accountInfo-page";
+import { OrdersUserPage } from "./pages/user/orders-user-page";
+import { ProtectedRoute } from "./components/ui/protected-route";
+import { getCookie } from "./lib/utils";
+import { useGetMeQuery } from "./store/api/api-user";
+import { OrderUserDetailPage } from "./pages/user/order-user-detail";
 
 export const App = () => {
+  const deviceId = getCookie("deviceId");
+  const { isLoading } = useGetMeQuery(undefined, { skip: !deviceId });
+
+  if (isLoading) return <div>Loading...</div>;
+
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/" element={<Navigate to="/home" />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route element={<AppLayout />}>
-        <Route path="/home" element={<HomePage />} />
+
+      {/* User routes */}
+      <Route element={<ProtectedRoute requiredRole="USER" />}>
+        <Route element={<AppLayout />}>
+          <Route path="/home" element={<HomePage />} />
+        </Route>
+        <Route element={<ProfileLayout />}>
+          <Route path="/profile" element={<AccountInfoPage />} />
+          <Route path="/profile/orders" element={<OrdersUserPage />} />
+          <Route path="/profile/favorite" element={<FavoritePage />} />
+          <Route path="/profile/addresses" element={<AddressPage />} />
+          <Route path="/profile/orders/:id" element={<OrderUserDetailPage />} />
+        </Route>
       </Route>
-      <Route element={<DashboardLayout />}>
-        <Route path="/dashboard" element={<MainPage />} />
-        <Route path="/dashboard/products" element={<ProductsPage />} />
-        <Route path="/dashboard/order" element={<OrderPage />} />
-        <Route path="/dashboard/stock" element={<StockPage />} />
-        <Route
-          path="/dashboard/product"
-          element={<ProductPage title="Add Product" />}
-        />
-        <Route
-          path="/dashboard/update-product/:id"
-          element={<EditProductPage />}
-        />
-        <Route path="/dashboard/order/:id" element={<OrderDetailPage />} />
+
+      {/* Admin routes */}
+      <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
+        <Route element={<DashboardLayout />}>
+          <Route path="/dashboard" element={<MainPage />} />
+          <Route path="/dashboard/products" element={<ProductsPage />} />
+          <Route path="/dashboard/order" element={<OrderPage />} />
+          <Route path="/dashboard/stock" element={<StockPage />} />
+          <Route
+            path="/dashboard/product"
+            element={<ProductPage title="Add Product" />}
+          />
+          <Route
+            path="/dashboard/update-product/:id"
+            element={<EditProductPage />}
+          />
+          <Route path="/dashboard/order/:id" element={<OrderDetailPage />} />
+        </Route>
       </Route>
-      <Route
-        path="*"
-        element={
-          <div className="flex h-screen items-center justify-center">
-            404 - Không tìm thấy trang
-          </div>
-        }
-      />
+
+      <Route path="*" element={<div>404</div>} />
     </Routes>
   );
 };

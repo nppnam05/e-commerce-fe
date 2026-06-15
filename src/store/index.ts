@@ -2,12 +2,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/auth-slice";
 import { authApi } from "./api/api-auth";
 import { productApi } from "./api/api-product";
-import { adminApi } from "./api/admin";
+import { adminApi } from "./api/api-admin";
 import { categoryApi } from "./api/api-category";
 import { colorApi } from "./api/api-color";
 import { sizeApi } from "./api/api-size";
 import { stockApi } from "./api/api-stock";
 import { orderApi } from "./api/api-order";
+import { userApi } from "./api/api-user";
+import { favoriteApi } from "./api/api-favorite";
+import { addressApi } from "./api/api-address";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +23,9 @@ export const store = configureStore({
     [sizeApi.reducerPath]: sizeApi.reducer,
     [stockApi.reducerPath]: stockApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
+    [favoriteApi.reducerPath]: favoriteApi.reducer,
+    [addressApi.reducerPath]: addressApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -30,7 +36,10 @@ export const store = configureStore({
     .concat(colorApi.middleware)
     .concat(sizeApi.middleware)
     .concat(stockApi.middleware)
-    .concat(orderApi.middleware),
+    .concat(orderApi.middleware)
+    .concat(userApi.middleware)
+    .concat(favoriteApi.middleware)
+    .concat(addressApi.middleware),
 });
 
 // Xuất ra các Type để dùng với TypeScript cho chuẩn
