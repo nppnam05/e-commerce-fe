@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
-interface AddressForm {
+export interface AddressForm {
   street: string;
   ward: string;
   district: string;

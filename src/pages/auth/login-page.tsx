@@ -28,8 +28,8 @@ export const LoginPage = () => {
     try {
       const result = await signIn({ email, password }).unwrap();
       if (result) {
-        safeLocalStorage.setItem("deviceId", result.deviceId);
-        setCookie("deviceId", result.deviceId, 365);
+        safeLocalStorage.setItem("deviceId", result.deviceId || "");
+        setCookie("deviceId", result.deviceId || "", 365);
         dispatch(login(result));
         if (result.roleName === "ADMIN") {
           navigate("/dashboard");

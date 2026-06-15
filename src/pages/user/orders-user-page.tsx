@@ -14,13 +14,16 @@ export const OrdersUserPage = () => {
     setCurrentPage(page);
   };
 
-  const { data } = useGetMeOrderQuery({
-    userId: user.id,
-    params: {
-      pageNumber: currentPage,
-      pageSize: page.pageSize,
+  const { data } = useGetMeOrderQuery(
+    {
+      userId: user?.id || "",
+      params: {
+        pageNumber: currentPage,
+        pageSize: page.pageSize,
+      },
     },
-  });
+    { skip: !user },
+  );
   const orders = data?.data || [];
 
   return (
