@@ -1,4 +1,5 @@
 import { Menu, Search } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { DropdownButton } from "./dropdown-button";
 import { Input } from "./input";
 import Cart from "@/assets/svgs/cart.svg?react";
