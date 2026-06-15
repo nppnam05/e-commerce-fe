@@ -34,9 +34,12 @@ export const orderApi = createApi({
           data: [],
         };
       },
-      providesTags: ["Order"]
+      providesTags: ["Order"],
     }),
-    updateStatusOrder: builder.mutation<boolean, { id: number; status: string }>({
+    updateStatusOrder: builder.mutation<
+      boolean,
+      { id: number; status: string }
+    >({
       query: ({ id, status }) => ({
         url: `/order/${id}/status`,
         method: "PUT",
@@ -49,7 +52,7 @@ export const orderApi = createApi({
         }
         return false;
       },
-      invalidatesTags: ["Order"]
+      invalidatesTags: ["Order"],
     }),
     getMonthlyRevenue: builder.query<MonthlyRevenueResponse[], void>({
       query: () => ({
@@ -91,4 +94,10 @@ export const orderApi = createApi({
   }),
 });
 
-export const { useGetOrdersQuery, useGetOrderDetailQuery, useUpdateStatusOrderMutation, useGetMonthlyRevenueQuery } = orderApi;
+export const {
+  useGetOrdersQuery,
+  useGetOrderDetailQuery,
+  useUpdateStatusOrderMutation,
+  useGetMonthlyRevenueQuery,
+} = orderApi;
+

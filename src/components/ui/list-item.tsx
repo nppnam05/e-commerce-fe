@@ -1,15 +1,33 @@
-import { Item, type ItemType } from "./item";
+import type { Product } from "@/types/product";
+import { ItemSkeleton } from "./item-skeleton";
+import { Item } from "./item";
 
-type ListItemInput = {
-  items: ItemType[];
-};
+interface ListItemInput extends React.HtmlHTMLAttributes<HTMLDivElement> {
+  products: Product[];
+  isFetching: boolean;
+  isLoading: boolean;
+  maxItem: number;
+}
 
-export function ListItem({ items }: ListItemInput) {
+export function ListItem({
+  isFetching,
+  products,
+  isLoading,
+  maxItem,
+  className,
+}: ListItemInput) {
   return (
-    <div className="grid lg:grid-cols-4 grid-cols-2 justify-items-center gap-4 ">
-      {items.map((item, index) => {
-        return <Item key={index} {...item} />;
-      })}
+    <div className={`${className}`}>
+      {!isLoading &&
+        products.map((product, index) => {
+          return <Item key={index} product={product} />;
+        })}
+
+      {isLoading && Array.from(Array(maxItem), () => <ItemSkeleton />)}
+
+      {!isLoading && isFetching && (
+        <div className="inset-0 bg-black opacity-15"></div>
+      )}
     </div>
   );
 }
