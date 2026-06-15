@@ -11,8 +11,13 @@ import { StockPage } from "./pages/dashboard/stock-page";
 import { ProductPage } from "./pages/dashboard/product-page";
 import { EditProductPage } from "./pages/dashboard/update-product-page";
 import { OrderDetailPage } from "./pages/dashboard/order-detail-page";
+import { DetailPage } from "./pages/detail/detail-page";
+import CategoryPage from "./pages/category/category-page";
+import { CartPage } from "./pages/cart/cart-page";
 
 export const App = () => {
+  const a = 10; 
+
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
@@ -20,6 +25,9 @@ export const App = () => {
       <Route path="/register" element={<RegisterPage />} />
       <Route element={<AppLayout />}>
         <Route path="/home" element={<HomePage />} />
+        <Route path="/detail/:id" element={<DetailPage />} />
+        <Route path="/category" element={<CategoryPage />} />
+        <Route path="/cart" element={<CartPage />} />
       </Route>
       <Route element={<DashboardLayout />}>
         <Route path="/dashboard" element={<MainPage />} />

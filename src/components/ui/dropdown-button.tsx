@@ -1,20 +1,21 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
-type Props = {
+interface Props extends React.HtmlHTMLAttributes<HTMLDivElement> {
+  name: String;
   children: React.ReactNode;
-};
+}
 
-export function DropdownButton({ children }: Props) {
+export function DropdownButton({ name, children, className }: Props) {
   const [isActive, setIsActive] = useState(false);
   const width = 20;
 
   return (
     <div
-      className="cursor-pointer relative inline"
+      className={`relative cursor-pointer ${className}`}
       onClick={() => setIsActive((isActive) => !isActive)}
     >
-      <span>Shop</span>
+      <span>{name}</span>
       {isActive ? (
         <ChevronUp width={width} className="inline" />
       ) : (
@@ -22,7 +23,7 @@ export function DropdownButton({ children }: Props) {
       )}
 
       {isActive ? (
-        <div className="absolute bottom-0 translate-y-[100%] left-1/2 translate-x-[-50%] bg-white outline outline-zinc-700 p-3 border rounded-md">
+        <div className="absolute bottom-0 left-1/2 translate-x-[-50%] translate-y-[100%] rounded-md border bg-white p-3 outline outline-zinc-700">
           {children}
         </div>
       ) : (
