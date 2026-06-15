@@ -1,7 +1,13 @@
 import React from "react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "custom";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "outline"
+    | "superBlack"
+    | "custom"
+    | "primary-no-outline";
   size?: "sm" | "md" | "lg";
 }
 
@@ -17,7 +23,10 @@ export const Button = ({
 
   const variants = {
     primary: "bg-white text-zinc-950 hover:bg-zinc-100 border border-zinc-200",
+    "primary-no-outline":
+      "bg-white text-zinc-950 hover:bg-zinc-100 [&.active]:bg-zinc-100 [&.active]:hover:bg-zinc-200",
     secondary: "bg-zinc-800 text-white hover:bg-zinc-700",
+    superBlack: "bg-black text-white hover:bg-zinc-700",
     outline: "border border-zinc-700 hover:border-zinc-500 text-white",
     custom: "",
   };

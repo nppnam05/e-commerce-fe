@@ -1,3 +1,5 @@
-export function RowDivident() {
-  return <div className="w-full h-px bg-black/20"></div>;
+interface RowDivident extends React.HtmlHTMLAttributes<HTMLDivElement> {}
+
+export function RowDivident({ className }: RowDivident) {
+  return <div className={`h-px w-full bg-black/20 ${className}`}></div>;
 }

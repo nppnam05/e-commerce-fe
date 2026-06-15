@@ -14,7 +14,7 @@ interface CreateProductRequest {
   description: string;
   price: number;
   categoryId: number;
-  colorId:  number;
+  colorId: number;
   sizeId: number;
   images: File[];
 }
@@ -23,18 +23,23 @@ export const productApi = createApi({
   reducerPath: "productApi",
   tagTypes: ["Product", "Stock"],
   endpoints: (builder) => ({
-    getAllProducts: builder.query<PaginatedResponse<Product>, GetAllProductsParams>({
+    getAllProducts: builder.query<
+      PaginatedResponse<Product>,
+      GetAllProductsParams
+    >({
       query: (params) => ({
         url: "/product",
         method: "GET",
         params,
         credentials: "include",
       }),
-      transformResponse: (response: BaseResponse<PaginatedResponse<Product>>) => {
+      transformResponse: (
+        response: BaseResponse<PaginatedResponse<Product>>,
+      ) => {
         if (response.succeeded && response.data) {
           return response.data;
         }
-         return {
+        return {
           pageNumber: 0,
           pageSize: 0,
           total: 0,
@@ -44,7 +49,10 @@ export const productApi = createApi({
       },
       providesTags: ["Product"],
     }),
-    createProduct: builder.mutation<BaseResponse<Product>, CreateProductRequest>({
+    createProduct: builder.mutation<
+      BaseResponse<Product>,
+      CreateProductRequest
+    >({
       query: (body) => {
         const form = new FormData();
         form.append("name", body.name);
@@ -59,11 +67,11 @@ export const productApi = createApi({
         return {
           url: "/product",
           method: "POST",
-          body:form,
+          body: form,
           credentials: "include",
-        }
+        };
       },
-      invalidatesTags: ["Product"], 
+      invalidatesTags: ["Product"],
     }),
     deleteProduct: builder.mutation<BaseResponse<Product>, number>({
       query: (id) => ({
@@ -71,7 +79,7 @@ export const productApi = createApi({
         method: "DELETE",
         credentials: "include",
       }),
-      invalidatesTags: ["Product"], 
+      invalidatesTags: ["Product"],
     }),
     updateProduct: builder.mutation<boolean, CreateProductRequest>({
       query: (body) => {
@@ -88,9 +96,9 @@ export const productApi = createApi({
         return {
           url: `/product/${body.id}`,
           method: "PUT",
-          body:form,
+          body: form,
           credentials: "include",
-        }
+        };
       },
       transformResponse: (response: BaseResponse<boolean>) => {
         if (response.succeeded) {
@@ -98,7 +106,7 @@ export const productApi = createApi({
         }
         return false;
       },
-      invalidatesTags: ["Product"], 
+      invalidatesTags: ["Product"],
     }),
     getProductById: builder.query<ProductDetail, number>({
       query: (id) => ({
@@ -111,7 +119,7 @@ export const productApi = createApi({
         if (response.succeeded && response.data) {
           return response.data;
         }
-         return {
+        return {
           id: 0,
           name: "",
           description: "",
@@ -126,4 +134,11 @@ export const productApi = createApi({
   }),
 });
 
-export const { useGetAllProductsQuery, useCreateProductMutation, useGetProductByIdQuery, useUpdateProductMutation, useDeleteProductMutation} = productApi;
+export const {
+  useGetAllProductsQuery,
+  useCreateProductMutation,
+  useGetProductByIdQuery,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
+} = productApi;
+

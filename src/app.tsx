@@ -20,6 +20,9 @@ import { ProtectedRoute } from "./components/ui/protected-route";
 import { getCookie } from "./lib/utils";
 import { useGetMeQuery } from "./store/api/api-user";
 import { OrderUserDetailPage } from "./pages/user/order-user-detail";
+import { DetailPage } from "./pages/detail/detail-page";
+import CategoryPage from "./pages/category/category-page";
+import { CartPage } from "./pages/cart/cart-page";
 
 export const App = () => {
   const deviceId = getCookie("deviceId");
@@ -37,6 +40,9 @@ export const App = () => {
       <Route element={<ProtectedRoute requiredRole="USER" />}>
         <Route element={<AppLayout />}>
           <Route path="/home" element={<HomePage />} />
+          <Route path="/detail/:id" element={<DetailPage />} />
+          <Route path="/category" element={<CategoryPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Route>
         <Route element={<ProfileLayout />}>
           <Route path="/profile" element={<AccountInfoPage />} />
