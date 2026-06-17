@@ -1,5 +1,5 @@
 import { customBaseQueryWithReauth } from "@/lib/api";
-import type { Product, ProductDetail } from "@/types/product";
+import type { Product, ProductDetail, ProductFilter } from "@/types/product";
 import type { BaseResponse, PaginatedResponse } from "@/types/response";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
@@ -14,8 +14,6 @@ interface CreateProductRequest {
   description: string;
   price: number;
   categoryId: number;
-  colorId: number;
-  sizeId: number;
   images: File[];
 }
 export const productApi = createApi({
@@ -49,6 +47,20 @@ export const productApi = createApi({
       },
       providesTags: ["Product"],
     }),
+    getProductFilters: builder.query<ProductFilter[], void>({
+      query: () => ({
+        url: "/product/filters",
+        method: "GET",
+        credentials: "include",
+      }),
+      transformResponse: (response: BaseResponse<ProductFilter[]>) => {
+        if (response.succeeded && response.data) {
+          return response.data;
+        }
+        return [];
+      },
+      providesTags: ["Product"],
+    }),
     createProduct: builder.mutation<
       BaseResponse<Product>,
       CreateProductRequest
@@ -59,8 +71,6 @@ export const productApi = createApi({
         form.append("description", body.description);
         form.append("price", body.price.toString());
         form.append("categoryId", body.categoryId.toString());
-        form.append("colorId", body.colorId.toString());
-        form.append("sizeId", body.sizeId.toString());
         body.images.forEach((image) => {
           form.append("images", image);
         });
@@ -88,8 +98,6 @@ export const productApi = createApi({
         form.append("description", body.description);
         form.append("price", body.price.toString());
         form.append("categoryId", body.categoryId.toString());
-        form.append("colorId", body.colorId.toString());
-        form.append("sizeId", body.sizeId.toString());
         body.images.forEach((image) => {
           form.append("images", image);
         });
@@ -140,5 +148,5 @@ export const {
   useGetProductByIdQuery,
   useUpdateProductMutation,
   useDeleteProductMutation,
+  useGetProductFiltersQuery,
 } = productApi;
-

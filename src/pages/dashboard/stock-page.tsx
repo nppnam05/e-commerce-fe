@@ -1,7 +1,6 @@
 import { SearchComponent } from "@/components/ui/search-component";
 import { DashboardPageLayout } from "./components/layouts/dashboardpage-layout";
 import { ProductTable } from "./components/ui/product-stock-table";
-import type { ProductStock } from "@/types/product-stock";
 import { Pagination } from "@/components/ui/pagination";
 import { useEffect, useState } from "react";
 import { StockEditModal } from "./components/ui/stock-edit-modal";
@@ -10,6 +9,7 @@ import {
   useGetAllProductStocksQuery,
   useUpdateStockMutation,
 } from "@/store/api/api-stock";
+import type { ProductStock } from "@/types/product";
 
 export const StockPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,7 +49,7 @@ export const StockPage = () => {
   };
 
   const handleSaveStock = async (id: number, newQuantity: number) => {
-    await updateStock({ productId: id, quantity: newQuantity }).unwrap();
+    await updateStock({ id: id, quantity: newQuantity }).unwrap();
     setIsModalOpen(false);
   };
 

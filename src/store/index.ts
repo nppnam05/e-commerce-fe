@@ -11,6 +11,7 @@ import { orderApi } from "./api/api-order";
 import { userApi } from "./api/api-user";
 import { favoriteApi } from "./api/api-favorite";
 import { addressApi } from "./api/api-address";
+import { productChildrenApi } from "./api/api-product-children";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [favoriteApi.reducerPath]: favoriteApi.reducer,
     [addressApi.reducerPath]: addressApi.reducer,
+    [productChildrenApi.reducerPath]: productChildrenApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -39,7 +41,8 @@ export const store = configureStore({
     .concat(orderApi.middleware)
     .concat(userApi.middleware)
     .concat(favoriteApi.middleware)
-    .concat(addressApi.middleware),
+    .concat(addressApi.middleware)
+    .concat(productChildrenApi.middleware),
 });
 
 // Xuất ra các Type để dùng với TypeScript cho chuẩn
