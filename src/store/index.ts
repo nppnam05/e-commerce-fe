@@ -11,6 +11,7 @@ import { orderApi } from "./api/api-order";
 import { userApi } from "./api/api-user";
 import { favoriteApi } from "./api/api-favorite";
 import { addressApi } from "./api/api-address";
+import { productChildrenApi } from "./api/api-product-children";
 import { cartApi } from "./api/api-cart";
 import { useSelector, type TypedUseSelectorHook } from "react-redux";
 
@@ -28,6 +29,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [favoriteApi.reducerPath]: favoriteApi.reducer,
     [addressApi.reducerPath]: addressApi.reducer,
+    [productChildrenApi.reducerPath]: productChildrenApi.reducer,
     [cartApi.reducerPath]: cartApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -43,6 +45,7 @@ export const store = configureStore({
       .concat(userApi.middleware)
       .concat(favoriteApi.middleware)
       .concat(addressApi.middleware)
+    .concat(productChildrenApi.middleware)
       .concat(cartApi.middleware),
 });
 

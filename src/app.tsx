@@ -23,6 +23,7 @@ import { OrderUserDetailPage } from "./pages/user/order-user-detail";
 import { DetailPage } from "./pages/detail/detail-page";
 import CategoryPage from "./pages/category/category-page";
 import { CartPage } from "./pages/cart/cart-page";
+import { ProductChildrenPage } from "./pages/dashboard/product-children-page";
 
 export const App = () => {
   const deviceId = getCookie("deviceId");
@@ -60,6 +61,10 @@ export const App = () => {
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<MainPage />} />
           <Route path="/dashboard/products" element={<ProductsPage />} />
+          <Route
+            path="/dashboard/product-children"
+            element={<ProductChildrenPage />}
+          />
           <Route path="/dashboard/order" element={<OrderPage />} />
           <Route path="/dashboard/stock" element={<StockPage />} />
           <Route
