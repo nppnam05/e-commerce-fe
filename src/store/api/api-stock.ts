@@ -4,7 +4,7 @@ import type { BaseResponse, PaginatedResponse } from "@/types/response";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 export interface UpdateStockRequest {
-  productId: number;
+  id: number;
   quantity: number;
 }
 interface GetAllStocksParams {
@@ -34,7 +34,7 @@ export const stockApi = createApi({
     }),
     getAllProductStocks: builder.query<PaginatedResponse<ProductStock>, GetAllStocksParams>({
       query: (params) => ({
-        url: "/product/stock",
+        url: "/stock",
         method: "GET",
         params,
         credentials: "include",

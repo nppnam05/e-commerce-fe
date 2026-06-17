@@ -3,9 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import { Select } from "./components/ui/select";
-import { ColorPicker } from "./components/ui/color-picker";
-import { useGetAllColorsQuery } from "@/store/api/api-color";
-import { useGetAllSizesQuery } from "@/store/api/api-size";
 import { useGetAllCategoriesQuery } from "@/store/api/api-category";
 import { ImageUpload } from "./components/ui/ImageUpload";
 import {
@@ -19,8 +16,6 @@ interface ProductFormData {
   description: string;
   price: number;
   category: string;
-  size: string;
-  color: string;
 }
 
 export const EditProductPage = () => {
@@ -32,13 +27,9 @@ export const EditProductPage = () => {
     description: "",
     price: 0,
     category: "",
-    size: "",
-    color: "",
   });
   const [images, setImages] = useState<File[]>([]);
 
-  const { data: colors = [] } = useGetAllColorsQuery();
-  const { data: sizes = [] } = useGetAllSizesQuery();
   const { data: categories = [] } = useGetAllCategoriesQuery();
   const [updateProduct] = useUpdateProductMutation();
 
@@ -49,8 +40,6 @@ export const EditProductPage = () => {
         description: product.description,
         price: product.price,
         category: String(product.categoryId),
-        size: String(product.sizeId),
-        color: product.colorCode,
       });
     }
   }, [product]);
@@ -67,17 +56,9 @@ export const EditProductPage = () => {
     }));
   };
 
-  const handleColorChange = (color: string) => {
-    setFormData((prev) => ({ ...prev, color }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const categoryId = Number(formData.category);
-    const sizeId = Number(formData.size);
-    const colorId = Number(
-      colors.find((c) => c.colorCode === formData.color)?.id,
-    );
 
     try {
       var result = await updateProduct({
@@ -86,8 +67,6 @@ export const EditProductPage = () => {
         description: formData.description,
         price: formData.price,
         categoryId,
-        colorId,
-        sizeId,
         images,
       }).unwrap();
       if (result) {
@@ -172,25 +151,7 @@ export const EditProductPage = () => {
                 }))}
                 required
               />
-              <Select
-                label="Kích cỡ"
-                name="size"
-                value={formData.size}
-                onChange={handleChange}
-                options={sizes.map((size) => ({
-                  value: size.id,
-                  label: size.name,
-                }))}
-                required
-              />
             </div>
-
-            <ColorPicker
-              label="Màu sắc"
-              value={formData.color}
-              onChange={handleColorChange}
-              colors={colors.map((color) => color.colorCode)}
-            />
 
             <ImageUpload
               label="Thay ảnh mới (không bắt buộc)"

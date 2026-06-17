@@ -12,8 +12,6 @@ export interface ProductDetail {
   description: string;
   price: number;
   categoryId: number;
-  sizeId: number;
-  colorCode: string;
   imageUrls: string[];
 }
 
@@ -27,3 +25,21 @@ export interface ProductOrder {
   colorCode: string;
   imageUrls: string[];
 }
+
+export interface ProductStock {
+  id: number;
+  name: string;
+  category: string;
+  price: number;
+  quantity: number;
+  size: string;
+  colorCode: string;
+  imageUrls: string[];
+}
+
+export interface ProductFilter {
+  id: number;
+  name: string;
+}
+
+export interface ProductChildren extends ProductStock {}

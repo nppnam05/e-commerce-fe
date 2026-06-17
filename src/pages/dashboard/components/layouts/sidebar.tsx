@@ -14,6 +14,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 const menuItems = [
   { icon: Home, label: "Dashboard", path: "/dashboard" },
   { icon: Package, label: "Products", path: "/dashboard/products" },
+  { icon: Package, label: "Product children", path: "/dashboard/product-children" },
   { icon: List, label: "Orders", path: "/dashboard/order" },
   { icon: BarChart3, label: "Product Stock", path: "/dashboard/stock" },
 ];

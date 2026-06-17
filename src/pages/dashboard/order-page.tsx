@@ -52,7 +52,7 @@ export const OrderPage = () => {
   return (
     <DashboardPageLayout title="Order Lists">
       <div className="rounded-2xl border border-gray-100 bg-white shadow-sm">
-        <div className="flex flex-col items-center gap-4 border-b border-gray-100 p-6 md:flex-row">
+        <div className="flex items-center gap-4 border-b border-gray-100 p-6 md:flex-row">
           <div className="flex items-center gap-2 font-medium text-gray-600">
             <Filter size={20} />
             <span>Filter By</span>

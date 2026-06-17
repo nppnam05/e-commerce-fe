@@ -1,4 +1,4 @@
-import type { ProductStock } from "@/types/product-stock";
+import type { ProductStock } from "@/types/product";
 import { Edit2 } from "lucide-react";
 
 interface ProductTableProps {
@@ -87,7 +87,7 @@ export const ProductTable = ({ products, onEdit }: ProductTableProps) => {
 
                 <td className="px-6 py-4">
                   <div className="flex gap-2">
-                    <ColorDot color={product.color} />
+                    <ColorDot color={product.colorCode} />
                   </div>
                 </td>
 
