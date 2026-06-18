@@ -9,6 +9,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     | "custom"
     | "primary-no-outline";
   size?: "sm" | "md" | "lg";
+  isLoading?: boolean;
 }
 
 export const Button = ({
@@ -16,10 +17,11 @@ export const Button = ({
   variant = "primary",
   size = "md",
   className = "",
+  isLoading = false,
   ...props
 }: ButtonProps) => {
   const baseStyles =
-    "font-semibold rounded-2xl transition-all active:scale-95 cursor-pointer";
+    "font-semibold rounded-2xl transition-all active:scale-95 cursor-pointer relative";
 
   const variants = {
     primary: "bg-white text-zinc-950 hover:bg-zinc-100 border border-zinc-200",
@@ -39,10 +41,13 @@ export const Button = ({
 
   return (
     <button
-      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className} `}
+      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
       {...props}
     >
       {children}
+      {isLoading && (
+        <div className="absolute inset-0 bg-white opacity-20"></div>
+      )}
     </button>
   );
 };
