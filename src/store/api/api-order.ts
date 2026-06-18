@@ -10,11 +10,25 @@ interface GetAllOrdersRequest {
   pageNumber?: number;
   pageSize?: number;
 }
+
+interface CreateOrderRequest {
+  userId: number, 
+  addressId: number
+}
+
 export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery: customBaseQueryWithReauth,
   tagTypes: ["Order"],
   endpoints: (builder) => ({
+    createOrder: builder.mutation<Order, CreateOrderRequest>({
+      query: (params) => ({
+        url: "/order",
+        method: "POST",
+        params, 
+        crendentials: "include"
+      })
+    }),
     getOrders: builder.query<PaginatedResponse<Order>, GetAllOrdersRequest>({
       query: (params) => ({
         url: "/order",
