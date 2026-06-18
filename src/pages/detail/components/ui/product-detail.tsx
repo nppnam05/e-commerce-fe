@@ -70,7 +70,14 @@ export default function ProductDetail() {
     throw new Error("Detail Context cannot be null");
   }
 
-  const { product, isFetchingProduct, countOrdered, setCountOrdered } = context;
+  const {
+    product,
+    isFetchingProduct,
+    countOrdered,
+    setCountOrdered,
+    createCart,
+    isLoadingCreateCart,
+  } = context;
 
   return isFetchingProduct ? (
     <div></div>
@@ -126,7 +133,12 @@ export default function ProductDetail() {
         <RowDivident />
         <div className="flex flex-row gap-4">
           <CountSelector value={countOrdered} onChanged={setCountOrdered} />
-          <Button variant="superBlack" className="w-full">
+          <Button
+            variant="superBlack"
+            className="w-full"
+            onClick={createCart}
+            isLoading={isLoadingCreateCart}
+          >
             Add To Cart
           </Button>
         </div>

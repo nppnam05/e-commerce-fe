@@ -1,3 +1,5 @@
+import { useAppSelector } from "@/store";
+import { useCreateCartMutation } from "@/store/api/api-cart";
 import {
   useGetAllProductsQuery,
   useGetProductByIdQuery,
@@ -6,7 +8,7 @@ import type { Product, ProductDetail } from "@/types/product";
 import type { ValueChanged } from "@/types/value-change";
 import type { VoidCallBack } from "@/types/void-call-back";
 import { createContext, useState, type ReactNode } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 type DetailProviderParam = {
   children: ReactNode;
@@ -15,24 +17,43 @@ type DetailProviderParam = {
 type DetailProviderValue = {
   product?: ProductDetail;
   relatedProducts: Product[];
-  order: VoidCallBack;
+  createCart: VoidCallBack;
   setCountOrdered: ValueChanged<number>;
   countOrdered: number;
   isLoadingProduct: boolean;
   isFetchingProduct: boolean;
   isLoadingRelatedProducts: boolean;
   isFetchingRelatedProducts: boolean;
+  isLoadingCreateCart: boolean;
 };
 
 export const DetailContext = createContext<DetailProviderValue | null>(null);
 
 export function DetailProvider({ children }: DetailProviderParam) {
+  const navigate = useNavigate();
+  const userId = useAppSelector((store) => store.auth.user?.id || "0");
   const { id } = useParams();
   const idInt = parseInt(id ?? "0");
+  const userIdInt = parseInt(userId);
 
   const [countOrdered, setCountOrdered] = useState(1);
+  const [
+    createCart,
+    { isUninitialized, isSuccess, isLoading: isLoadingCreateCart },
+  ] = useCreateCartMutation();
 
-  function handleOrder() {}
+  if (!isUninitialized && isSuccess) {
+    navigate("/cart");
+  }
+
+  function handleCreateCart() {
+    createCart({
+      quantity: countOrdered,
+      singlePrice: 0,
+      userId: userIdInt,
+      productId: idInt,
+    });
+  }
 
   const {
     isLoading: isLoadingProduct,
@@ -59,7 +80,8 @@ export function DetailProvider({ children }: DetailProviderParam) {
         relatedProducts,
         countOrdered,
         setCountOrdered,
-        order: handleOrder,
+        createCart: handleCreateCart,
+        isLoadingCreateCart,
       }}
     >
       {children}

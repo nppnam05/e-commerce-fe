@@ -11,6 +11,8 @@ import { orderApi } from "./api/api-order";
 import { userApi } from "./api/api-user";
 import { favoriteApi } from "./api/api-favorite";
 import { addressApi } from "./api/api-address";
+import { cartApi } from "./api/api-cart";
+import { useSelector, type TypedUseSelectorHook } from "react-redux";
 
 export const store = configureStore({
   reducer: {
@@ -26,22 +28,25 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [favoriteApi.reducerPath]: favoriteApi.reducer,
     [addressApi.reducerPath]: addressApi.reducer,
+    [cartApi.reducerPath]: cartApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-    .concat(authApi.middleware)
-    .concat(productApi.middleware)
-    .concat(adminApi.middleware)
-    .concat(categoryApi.middleware)
-    .concat(colorApi.middleware)
-    .concat(sizeApi.middleware)
-    .concat(stockApi.middleware)
-    .concat(orderApi.middleware)
-    .concat(userApi.middleware)
-    .concat(favoriteApi.middleware)
-    .concat(addressApi.middleware),
+      .concat(authApi.middleware)
+      .concat(productApi.middleware)
+      .concat(adminApi.middleware)
+      .concat(categoryApi.middleware)
+      .concat(colorApi.middleware)
+      .concat(sizeApi.middleware)
+      .concat(stockApi.middleware)
+      .concat(orderApi.middleware)
+      .concat(userApi.middleware)
+      .concat(favoriteApi.middleware)
+      .concat(addressApi.middleware)
+      .concat(cartApi.middleware),
 });
 
 // Xuất ra các Type để dùng với TypeScript cho chuẩn
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

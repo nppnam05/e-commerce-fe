@@ -36,12 +36,14 @@ export const App = () => {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
 
+      <Route element={<AppLayout />}>
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/detail/:id" element={<DetailPage />} />
+        <Route path="/category" element={<CategoryPage />} />
+      </Route>
       {/* User routes */}
       <Route element={<ProtectedRoute requiredRole="USER" />}>
         <Route element={<AppLayout />}>
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/detail/:id" element={<DetailPage />} />
-          <Route path="/category" element={<CategoryPage />} />
           <Route path="/cart" element={<CartPage />} />
         </Route>
         <Route element={<ProfileLayout />}>
