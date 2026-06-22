@@ -12,42 +12,47 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
 }
 
-export const Button = ({
-  children,
-  variant = "primary",
-  size = "md",
-  className = "",
-  isLoading = false,
-  ...props
-}: ButtonProps) => {
-  const baseStyles =
-    "font-semibold rounded-2xl transition-all active:scale-95 cursor-pointer relative";
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (propsArg, ref) => {
+    const {
+      children,
+      variant = "primary",
+      size = "md",
+      className = "",
+      isLoading = false,
+      ...props
+    } = propsArg;
+    const baseStyles =
+      "font-semibold rounded-2xl transition-all active:scale-95 cursor-pointer relative";
 
-  const variants = {
-    primary: "bg-white text-zinc-950 hover:bg-zinc-100 border border-zinc-200",
-    "primary-no-outline":
-      "bg-white text-zinc-950 hover:bg-zinc-100 [&.active]:bg-zinc-100 [&.active]:hover:bg-zinc-200",
-    secondary: "bg-zinc-800 text-white hover:bg-zinc-700",
-    superBlack: "bg-black text-white hover:bg-zinc-700",
-    outline: "border border-zinc-700 hover:border-zinc-500 text-white",
-    custom: "",
-  };
+    const variants = {
+      primary:
+        "bg-white text-zinc-950 hover:bg-zinc-100 border border-zinc-200",
+      "primary-no-outline":
+        "bg-white text-zinc-950 hover:bg-zinc-100 [&.active]:bg-zinc-100 [&.active]:hover:bg-zinc-200",
+      secondary: "bg-zinc-800 text-white hover:bg-zinc-700",
+      superBlack: "bg-black text-white hover:bg-zinc-700",
+      outline: "border border-zinc-700 hover:border-zinc-500 text-white",
+      custom: "",
+    };
 
-  const sizes = {
-    sm: "py-2.5 px-5 text-sm",
-    md: "py-4 px-6 text-base",
-    lg: "py-4 text-lg tracking-wider",
-  };
+    const sizes = {
+      sm: "py-2.5 px-5 text-sm",
+      md: "py-4 px-6 text-base",
+      lg: "py-4 text-lg tracking-wider",
+    };
 
-  return (
-    <button
-      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
-      {...props}
-    >
-      {children}
-      {isLoading && (
-        <div className="absolute inset-0 bg-white opacity-20"></div>
-      )}
-    </button>
-  );
-};
+    return (
+      <button
+        ref={ref}
+        className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
+        {...props}
+      >
+        {children}
+        {isLoading && (
+          <div className="absolute inset-0 bg-white opacity-20"></div>
+        )}
+      </button>
+    );
+  },
+);
