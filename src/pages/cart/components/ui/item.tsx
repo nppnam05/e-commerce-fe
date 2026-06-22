@@ -46,7 +46,11 @@ export default function Item({
       </div>
 
       <div className="flex flex-col items-end justify-between">
-        <Trash2 color={colors.red[600]} onClick={onDelete} />
+        <Trash2
+          color={colors.red[600]}
+          onClick={onDelete}
+          className="cursor-pointer"
+        />
         <CountSelector onChanged={onCountChange} value={quantity} />
       </div>
     </div>
