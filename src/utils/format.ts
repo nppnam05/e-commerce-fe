@@ -1,18 +1,23 @@
-export const formatVND = (value: number | string): string => {
-  const num = typeof value === 'string' ? parseFloat(value) : value;
-  if (isNaN(num)) return '0 VND';
+import type { Address } from "@/types/address";
 
-  const formattedNumber = new Intl.NumberFormat('vi-VN', {
-    style: 'decimal',
+export const formatVND = (value: number | string): string => {
+  const num = typeof value === "string" ? parseFloat(value) : value;
+  if (isNaN(num)) return "0 VND";
+
+  const formattedNumber = new Intl.NumberFormat("vi-VN", {
+    style: "decimal",
   }).format(num);
- 
+
   return `${formattedNumber} VND`;
 };
 
-export const formatDateTime = (dateInput: Date | string | number | undefined | null,type: "full" | "date-only" | "time-only" | "short" = "full"): string => {
- if (!dateInput) return "---";
- const date = new Date(dateInput);
- if (isNaN(date.getTime())) return "Invalid date";
+export const formatDateTime = (
+  dateInput: Date | string | number | undefined | null,
+  type: "full" | "date-only" | "time-only" | "short" = "full",
+): string => {
+  if (!dateInput) return "---";
+  const date = new Date(dateInput);
+  if (isNaN(date.getTime())) return "Invalid date";
   // Cấu hình định dạng tiếng Việt (vi-VN)
   switch (type) {
     case "date-only":
@@ -34,8 +39,16 @@ export const formatDateTime = (dateInput: Date | string | number | undefined | n
 
     case "short":
       // Kết quả: 28/05/2026 14:30
-      const d = new Intl.DateTimeFormat("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" }).format(date);
-      const t = new Intl.DateTimeFormat("vi-VN", { hour: "2-digit", minute: "2-digit", hour12: false }).format(date);
+      const d = new Intl.DateTimeFormat("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      }).format(date);
+      const t = new Intl.DateTimeFormat("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      }).format(date);
       return `${d} ${t}`;
 
     case "full":
@@ -57,3 +70,7 @@ export const formatDateTime = (dateInput: Date | string | number | undefined | n
       return `${datePart} lúc ${timePart}`;
   }
 };
+
+export function formatAddress(address: Address) {
+  return `${address.street} - ${address.ward} - ${address.district} - ${address.city}`;
+}
