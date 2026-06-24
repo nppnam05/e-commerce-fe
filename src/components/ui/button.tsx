@@ -46,7 +46,7 @@ export const Button = ({
     >
       {children}
       {isLoading && (
-        <div className="absolute inset-0 bg-white opacity-20"></div>
+        <div className="absolute inset-0 bg-white opacity-50"></div>
       )}
     </button>
   );

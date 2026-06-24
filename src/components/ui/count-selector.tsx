@@ -3,36 +3,26 @@ import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 
 type CountSelectorInput = {
-  onChanged: ValueChanged<number>
-  value: number
-}
+  onChanged: ValueChanged<number>;
+  value: number;
+};
 
 export function CountSelector({ onChanged, value }: CountSelectorInput) {
-  const [count, setCount] = useState(value)
-
   function handlePrev() {
-    if (count <= 1)
-      return;
+    if (value <= 1) return;
 
-    setCount(count => {
-      const newCount = count - 1;
-      onChanged(newCount)
-      return newCount;
-    })
+    onChanged(value - 1);
   }
 
   function handleNext() {
-    setCount(count => {
-      const newCount = count + 1;
-
-      onChanged(newCount)
-      return newCount;
-    })
+    onChanged(value + 1);
   }
 
-  return (<span className="rounded-3xl bg-zinc-100 px-4 py-2 flex flex-row gap-8 w-fit items-center">
-    <Minus onClick={handlePrev} width={24} height={24} />
-    <span style={{ fontSize: 24 }}>{count}</span>
-    <Plus onClick={handleNext} width={24} height={24} />
-  </span>)
+  return (
+    <span className="flex w-fit flex-row items-center gap-8 rounded-3xl bg-zinc-100 px-4 py-2">
+      <Minus onClick={handlePrev} width={24} height={24} />
+      <span style={{ fontSize: 24 }}>{value}</span>
+      <Plus onClick={handleNext} width={24} height={24} />
+    </span>
+  );
 }

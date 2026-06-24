@@ -15,9 +15,8 @@ export type UpdateCartRequest = {
 
 export type CreateCartRequest = {
   userId: number;
-  productId: number;
+  productChildrenId: number;
   quantity: number;
-  singlePrice: number;
 };
 
 export const cartApi = createApi({

@@ -13,6 +13,7 @@ import { favoriteApi } from "./api/api-favorite";
 import { addressApi } from "./api/api-address";
 import { cartApi } from "./api/api-cart";
 import { useSelector, type TypedUseSelectorHook } from "react-redux";
+import { ProductChildrenApi } from "./api/api-product-children";
 
 export const store = configureStore({
   reducer: {
@@ -29,6 +30,7 @@ export const store = configureStore({
     [favoriteApi.reducerPath]: favoriteApi.reducer,
     [addressApi.reducerPath]: addressApi.reducer,
     [cartApi.reducerPath]: cartApi.reducer,
+    [ProductChildrenApi.reducerPath]: ProductChildrenApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -43,7 +45,8 @@ export const store = configureStore({
       .concat(userApi.middleware)
       .concat(favoriteApi.middleware)
       .concat(addressApi.middleware)
-      .concat(cartApi.middleware),
+      .concat(cartApi.middleware)
+      .concat(ProductChildrenApi.middleware),
 });
 
 // Xuất ra các Type để dùng với TypeScript cho chuẩn

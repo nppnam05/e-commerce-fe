@@ -1,16 +1,16 @@
 import type { ValueChanged } from "@/types/value-change";
-import { useState } from "react";
 
 interface BadgeSelectorInput extends React.HTMLAttributes<HTMLDivElement> {
-  texts: String[];
+  notFading?: string[];
+  texts: string[];
   fontSize: number;
   selectedTextColor: string;
   defaultTextColor: string;
   selectedBackgroundColor: string;
   defaultBackgroundColor: string;
   gap: number;
-  value: String;
-  onChanged: ValueChanged<String>;
+  value: string | null;
+  onChanged: ValueChanged<string>;
 }
 
 export function BadgeSelector({
@@ -24,26 +24,21 @@ export function BadgeSelector({
   onChanged,
   className,
   value,
+  notFading = null,
 }: BadgeSelectorInput) {
-  const [selectedText, setSelectedText] = useState(value);
-
-  function handleChangeValue(text: String) {
-    setSelectedText(text);
-    onChanged(text);
-  }
-
   return (
     <div className={`flex flex-row ${className}`} style={{ gap: `${gap}px` }}>
       {texts.map((text, index) => (
         <Badge
+          isFading={notFading !== null && !notFading.includes(text)}
           text={text}
           fontSize={fontSize}
           selectedBackgroundColor={selectedBackgroundColor}
           defaultBackgroundColor={defaultBackgroundColor}
           defaultTextColor={defaultTextColor}
           selectedTextColor={selectedTextColor}
-          isSelected={text === selectedText}
-          onClick={() => handleChangeValue(text)}
+          isSelected={text === value}
+          onClick={() => onChanged(text)}
           key={index}
         />
       ))}
@@ -52,7 +47,8 @@ export function BadgeSelector({
 }
 
 type BadgeInput = {
-  text: String;
+  isFading: boolean;
+  text: string;
   selectedTextColor: string;
   defaultTextColor: string;
   selectedBackgroundColor: string;
@@ -63,6 +59,7 @@ type BadgeInput = {
 };
 
 function Badge({
+  isFading,
   text,
   selectedTextColor,
   defaultTextColor,
@@ -81,11 +78,15 @@ function Badge({
     <div
       onClick={onClick}
       style={{ backgroundColor: backgroundColor }}
-      className="cursor-pointer rounded-3xl px-4 py-2 transition-colors duration-300 ease-in-out"
+      className="relative cursor-pointer rounded-3xl px-4 py-2 transition-colors duration-300 ease-in-out"
     >
       <span style={{ color: textColor, fontSize: `${fontSize}px` }}>
         {text}
       </span>
+
+      <div
+        className={`absolute inset-0 rounded-3xl bg-white opacity-50 ${isFading ? "block" : "hidden"}`}
+      ></div>
     </div>
   );
 }

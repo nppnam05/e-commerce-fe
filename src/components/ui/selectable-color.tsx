@@ -8,6 +8,7 @@ interface SelectableColorInput extends React.HtmlHTMLAttributes<HTMLDivElement> 
   checkColor: string;
   colorWidthHeight?: number;
   isCheck: boolean;
+  isFading?: boolean;
 }
 
 export default function SelectableColor({
@@ -18,10 +19,11 @@ export default function SelectableColor({
   isCheck,
   valueChanged,
   className,
+  isFading = false,
 }: SelectableColorInput) {
   return (
     <div
-      className={`cursor-pointer rounded-[100px] outline ${className}`}
+      className={`relative cursor-pointer rounded-[100px] outline ${className} `}
       style={{
         outlineColor: outlineColor,
         backgroundColor: backgroundColor,
@@ -35,6 +37,10 @@ export default function SelectableColor({
           <Check className="h-full w-full" style={{ color: checkColor }} />
         </span>
       )}
+
+      <div
+        className={`absolute inset-0 rounded-[100px] bg-white opacity-50 ${isFading ? "block" : "hidden"}`}
+      ></div>
     </div>
   );
 }

@@ -8,6 +8,7 @@ export type ColorInput = {
 };
 
 interface ColorPalleteInput extends React.HtmlHTMLAttributes<HTMLDivElement> {
+  notFadingColors?: String[];
   colors: ColorInput[];
   selectColor: string;
   valueChanged: ValueChanged<string>;
@@ -16,6 +17,7 @@ interface ColorPalleteInput extends React.HtmlHTMLAttributes<HTMLDivElement> {
 
 export function ColorPallete({
   colors,
+  notFadingColors,
   selectColor,
   valueChanged,
   className,
@@ -30,6 +32,10 @@ export function ColorPallete({
           key={color.backgroundColor}
           className="aspect-square h-full w-full p-2"
           colorWidthHeight={colorWidthHeight}
+          isFading={
+            notFadingColors !== undefined &&
+            !notFadingColors.includes(color.backgroundColor)
+          }
           valueChanged={valueChanged}
         />
       ))}
