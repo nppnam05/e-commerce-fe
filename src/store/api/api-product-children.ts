@@ -9,6 +9,17 @@ interface UpdateProductChildren {
   colorId: number;
 }
 
+interface ProductChildrenQuantityParams {
+  productId: number;
+  colorId: number | null;
+  sizeId: number | null;
+}
+
+interface ProductChildrenQuantity {
+  id: number;
+  quantity: number;
+}
+
 interface GetAllProductChildrenParams {
   pageNumber?: number;
   pageSize?: number;
@@ -21,14 +32,19 @@ export const productChildrenApi = createApi({
   reducerPath: "productChildrenApi",
   tagTypes: ["ProductChildren"],
   endpoints: (builder) => ({
-    getAllProductChildren: builder.query<PaginatedResponse<ProductChildren>, GetAllProductChildrenParams>({
+    getAllProductChildren: builder.query<
+      PaginatedResponse<ProductChildren>,
+      GetAllProductChildrenParams
+    >({
       query: (params) => ({
         url: "/product-children",
         method: "GET",
         params,
         credentials: "include",
       }),
-      transformResponse: (response: BaseResponse<PaginatedResponse<ProductChildren>>) => {
+      transformResponse: (
+        response: BaseResponse<PaginatedResponse<ProductChildren>>,
+      ) => {
         if (response.succeeded && response.data) {
           return response.data;
         }
@@ -38,6 +54,27 @@ export const productChildrenApi = createApi({
           total: 0,
           totalPages: 0,
           data: [],
+        };
+      },
+      providesTags: ["ProductChildren"],
+    }),
+    getProductChildrenQuantity: builder.query<
+      ProductChildrenQuantity,
+      ProductChildrenQuantityParams
+    >({
+      query: (params) => ({
+        url: `/product-children/quantity`,
+        method: "GET",
+        params,
+        credentials: "include",
+      }),
+      transformResponse: (response: BaseResponse<ProductChildrenQuantity>) => {
+        if (response.succeeded && response.data) {
+          return response.data;
+        }
+        return {
+          id: 0,
+          quantity: 0,
         };
       },
       providesTags: ["ProductChildren"],
@@ -63,4 +100,5 @@ export const productChildrenApi = createApi({
 export const {
   useGetAllProductChildrenQuery,
   useUpdateProductChildrenMutation,
+  useGetProductChildrenQuantityQuery,
 } = productChildrenApi;

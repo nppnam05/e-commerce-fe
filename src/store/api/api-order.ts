@@ -1,6 +1,5 @@
-import { customBaseQueryWithReauth } from "@/lib/api";
 import type { Order, OrderDetail } from "@/types/order";
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseApi } from "./base-api";
 import type { BaseResponse, PaginatedResponse } from "@/types/response";
 import type { MonthlyRevenueResponse } from "@/types/monthly-revenue";
 
@@ -12,22 +11,35 @@ interface GetAllOrdersRequest {
 }
 
 interface CreateOrderRequest {
-  userId: number, 
-  addressId: number
+  userId: number;
+  addressId: number;
 }
 
-export const orderApi = createApi({
-  reducerPath: "orderApi",
-  baseQuery: customBaseQueryWithReauth,
-  tagTypes: ["Order"],
+export const orderApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createOrder: builder.mutation<Order, CreateOrderRequest>({
       query: (params) => ({
         url: "/order",
         method: "POST",
-        params, 
-        crendentials: "include"
-      })
+        body: params,
+        credentials: "include",
+      }),
+      transformResponse: (response: BaseResponse<Order>) => {
+        if (response.succeeded && response.data) {
+          return response.data;
+        }
+        return {
+          id: 0,
+          status: "",
+          customerName: "",
+          address: "",
+          code: "",
+          createdOn: new Date(),
+          totalAmount: 0,
+          products: [],
+        };
+      },
+      invalidatesTags: ["Order", "cart"],
     }),
     getOrders: builder.query<PaginatedResponse<Order>, GetAllOrdersRequest>({
       query: (params) => ({
@@ -113,5 +125,5 @@ export const {
   useGetOrderDetailQuery,
   useUpdateStatusOrderMutation,
   useGetMonthlyRevenueQuery,
+  useCreateOrderMutation,
 } = orderApi;
-

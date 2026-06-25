@@ -1,11 +1,6 @@
-import { customBaseQueryWithReauth } from "@/lib/api";
 import type { Cart } from "@/types/cart";
 import type { BaseResponse } from "@/types/response";
-import { createApi } from "@reduxjs/toolkit/query/react";
-
-type GetAllCartParams = {
-  userId: number;
-};
+import { baseApi } from "./base-api";
 
 export type UpdateCartRequest = {
   id: number;
@@ -15,15 +10,11 @@ export type UpdateCartRequest = {
 
 export type CreateCartRequest = {
   userId: number;
-  productId: number;
+  productChildrenId: number;
   quantity: number;
-  singlePrice: number;
 };
 
-export const cartApi = createApi({
-  baseQuery: customBaseQueryWithReauth,
-  reducerPath: "cartApi",
-  tagTypes: ["cart"],
+export const cartApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllCartsByUserId: builder.query<BaseResponse<Cart[]>, number>({
       query: (param) => ({

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { ProductStock } from "@/types/product-stock";
+import type { ProductStock } from "@/types/product";
 
 interface StockEditModalProps {
   product: ProductStock | null;

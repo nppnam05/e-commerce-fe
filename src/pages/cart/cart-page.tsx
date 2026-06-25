@@ -4,7 +4,6 @@ import {
 } from "@/components/ui/breadcrumb-navigation";
 import type { RootState } from "@/store";
 import { useSelector } from "react-redux";
-import { Modal } from "@/components/ui/modal";
 import AddressSelector from "./components/ui/address-selector";
 import ListItem from "./components/ui/list-item";
 import { useCartController } from "./components/context/use-cart-controller";
@@ -15,8 +14,8 @@ import { ArrowRight } from "lucide-react";
 import { formatAddress, formatVND } from "@/utils/format";
 import { Dialog } from "radix-ui";
 import { SelectableModal } from "@/components/ui/modal/selectable-modal";
-import type { MouseEvent } from "react";
 import { ErrorModal } from "@/components/ui/modal/error-modal";
+import { QRModal } from "./components/ui/qr-modal";
 const breadcrumbItems: BreadcrumbItem[] = [
   { label: "Home", href: "/home" },
   { label: "Cart" },
@@ -50,15 +49,10 @@ export function CartPage() {
             price={`${formatVND(data.totalPrice)} VND`}
             variant="secondary"
           />
-          <Label
-            name="Delivery Fee"
-            price={`${formatVND(15000)} VND`}
-            variant="secondary"
-          />
           <RowDivident />
           <Label
             name="Total"
-            price={`${formatVND(data.totalPrice + 15000)} VND`}
+            price={`${formatVND(data.totalPrice)} VND`}
             variant="primary"
           />
           <div
@@ -97,6 +91,12 @@ export function CartPage() {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
+
+      <QRModal
+        isOpen={modal.qr.isShowModal}
+        qrCode={modal.qr.qrCode}
+        onClose={modal.qr.toggleShowModal}
+      />
 
       <ErrorModal
         isOpen={modal.errorOrder.isShowModal}

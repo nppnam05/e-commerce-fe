@@ -17,7 +17,6 @@ export function NavigationBar() {
     (state: RootState) => state.auth,
   );
   const handleAvatarClick = () => {
-    console.log(isAuthenticated);
     if (isAuthenticated) {
       navigate("/profile");
     } else {

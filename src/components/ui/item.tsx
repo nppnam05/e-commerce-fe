@@ -13,8 +13,6 @@ export function Item({ product }: ItemType) {
     navigate("/detail/" + product.id);
   }
 
-  console.log(product);
-
   return (
     <span
       className="flex w-fit cursor-pointer flex-col items-start justify-start rounded px-8 py-4 hover:bg-zinc-200"

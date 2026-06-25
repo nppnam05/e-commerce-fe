@@ -3,8 +3,7 @@ import { DropdownButton } from "@/components/ui/dropdown-button";
 import { SlidersVertical } from "lucide-react";
 import Comment from "./comment";
 import { HomeItemsSection } from "@/pages/home/components/ui/home-items-section";
-import { useContext } from "react";
-import { DetailContext } from "../context/detail-context";
+import { useDetailPage } from "../../hooks/use-detail-page";
 
 const fakeData = {
   name: "Alaka",
@@ -16,17 +15,9 @@ const fakeData = {
 const fakeDatas = Array.from(Array(6), () => fakeData);
 
 export default function RatingAndReviewSection() {
-  const context = useContext(DetailContext);
-  if (context == null) {
-    throw new Error("Detial context cannot be null");
-  }
-
-  const {
-    relatedProducts,
-    isLoadingRelatedProducts,
-    isFetchingRelatedProducts,
-  } = context;
-
+  const { data, state } = useDetailPage();
+  const { relatedProducts } = data;
+  const { isLoading, isFetching } = state;
   return (
     <>
       <div className="mb-2 text-3xl font-bold">Rating and Reviews</div>
@@ -68,9 +59,9 @@ export default function RatingAndReviewSection() {
 
       <HomeItemsSection
         name="You Might Also Like"
-        products={relatedProducts}
-        isLoading={isLoadingRelatedProducts}
-        isFetching={isFetchingRelatedProducts}
+        products={relatedProducts?.data ?? []}
+        isLoading={isLoading}
+        isFetching={isFetching}
       />
     </>
   );

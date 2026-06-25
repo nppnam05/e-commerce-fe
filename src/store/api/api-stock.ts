@@ -1,5 +1,5 @@
 import { customBaseQueryWithReauth } from "@/lib/api";
-import type { ProductStock } from "@/types/product-stock";
+import type { ProductStock } from "@/types/product";
 import type { BaseResponse, PaginatedResponse } from "@/types/response";
 import { createApi } from "@reduxjs/toolkit/query/react";
 

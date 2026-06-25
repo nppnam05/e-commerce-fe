@@ -5,6 +5,8 @@ import {
   useUpdateCartMutation,
   type UpdateCartRequest,
 } from "@/store/api/api-cart";
+import { useCreateOrderMutation } from "@/store/api/api-order";
+import { useGetPaymentUrlMutation } from "@/store/api/api-pay";
 import type { Address } from "@/types/address";
 import type { Cart } from "@/types/cart";
 import type { ValueChanged } from "@/types/value-change";
@@ -62,6 +64,11 @@ type CartControllerValue = {
       isShowModal: boolean;
       toggleShowModal: ValueChanged<React.MouseEvent | null>;
     };
+    qr: {
+      isShowModal: boolean;
+      toggleShowModal: ValueChanged<React.MouseEvent | null>;
+      qrCode: string | null;
+    };
   };
 };
 
@@ -71,11 +78,13 @@ export function useCartController({ userId }: CartControllerParam) {
   const [selectedDeleteItem, setSelectedDeleteItem] = useState<number | null>(
     null,
   );
+  const [paymentUrl, setPaymentUrl] = useState<string | null>(null);
 
   const [isShowModal, setIsShowModal] = useState(false);
   const [isShowModalErrorOrder, setIsShowErrorOrderModal] = useState(false);
   const [isShowModalIsOrder, setIsShowModalIsOrder] = useState(false);
   const [isShowModalIsDelete, setIsShowModalIsDelete] = useState(false);
+  const [isShowQRModal, setIsShowQRModal] = useState(false);
   function handleToggleShowAddressModal(e?: React.MouseEvent) {
     e?.stopPropagation();
     console.log("toggle show address");
@@ -93,12 +102,32 @@ export function useCartController({ userId }: CartControllerParam) {
     e?.stopPropagation();
     setIsShowModalIsDelete((isShow) => !isShow);
   }
+  function handleToggleShowQRModal(e?: React.MouseEvent) {
+    e?.stopPropagation();
+    setIsShowQRModal((isShow) => !isShow);
+  }
 
-  function handleSelectedIsOrder(isOrder: boolean) {
+  const [createOrder] = useCreateOrderMutation();
+  const [getPaymentUrl] = useGetPaymentUrlMutation();
+
+  async function handleSelectedIsOrder(isOrder: boolean) {
     if (isOrder === false) return;
 
-    //order
-    //TODO: handle order here
+    try {
+      const order = await createOrder({
+        userId: parseInt(userId),
+        addressId: selectedAddress?.id ?? 1,
+      }).unwrap();
+      console.log("order:", order.id);
+
+      const payment = await getPaymentUrl(order.id).unwrap();
+      console.log("payment:", payment);
+      setPaymentUrl(payment.qrCode);
+      setIsShowModalIsOrder(false);
+      setIsShowQRModal(true);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   const {
@@ -216,6 +245,11 @@ export function useCartController({ userId }: CartControllerParam) {
       errorOrder: {
         isShowModal: isShowModalErrorOrder,
         toggleShowModal: handleToggleShowErrorOrderModal,
+      },
+      qr: {
+        isShowModal: isShowQRModal,
+        toggleShowModal: handleToggleShowQRModal,
+        qrCode: paymentUrl,
       },
     },
   };

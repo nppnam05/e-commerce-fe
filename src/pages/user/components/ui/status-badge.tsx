@@ -6,7 +6,7 @@ export const StatusBadge = ({ status }: { status: string }) => {
     REJ: "bg-red-100 text-red-700",
     COM: "bg-green-100 text-green-700",
     SHP: "bg-blue-100 text-blue-700",
-    CAN: "bg-yellow-100 text-yellow-700",
+    CNL: "bg-yellow-100 text-yellow-700",
   };
 
   return (

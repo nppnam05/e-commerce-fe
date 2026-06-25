@@ -3,6 +3,7 @@ export const STATUS = {
   REJ: "REJECTED",
   SHP: "SHIPPED",
   COM: "COMPLETED",
+  CNL: "CANCELLED",
 } as const;
 
 export const STATUS_TEXT = {
@@ -10,4 +11,5 @@ export const STATUS_TEXT = {
   REJ: "Đã bị từ chối",
   SHP: "Đang vận chuyển",
   COM: "Đã giao hàng",
+  CNL: "Đã hủy",
 };
