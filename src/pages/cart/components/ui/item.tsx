@@ -2,6 +2,7 @@ import { CountSelector } from "@/components/ui/count-selector";
 import type { Cart } from "@/types/cart";
 import type { ValueChanged } from "@/types/value-change";
 import type { VoidCallBack } from "@/types/void-call-back";
+import { formatVND } from "@/utils/format";
 import { Trash2 } from "lucide-react";
 import colors from "tailwindcss/colors";
 
@@ -42,7 +43,7 @@ export default function Item({
             <span className="text-base text-zinc-600">{colorCode}</span>
           </div>
         </div>
-        <div className="text-2xl font-bold">{price} VND</div>
+        <div className="text-2xl font-bold">{formatVND(price)}</div>
       </div>
 
       <div className="flex flex-col items-end justify-between">

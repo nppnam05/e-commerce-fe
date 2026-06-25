@@ -19,10 +19,25 @@ export const colorApi = createApi({
         if (response.succeeded && response.data) {
           return response.data;
         }
-         return [];
+        return [];
+      },
+    }),
+    getColorsWithStockByProductId: builder.query<Color[], number>({
+      query: (productId) => ({
+        url: `/color/product/${productId}`,
+        method: "GET",
+        credentials: "include",
+        providesTags: ["Color"],
+      }),
+      transformResponse: (response: BaseResponse<Color[]>) => {
+        if (response.succeeded && response.data) {
+          return response.data;
+        }
+        return [];
       },
     }),
   }),
 });
 
-export const { useGetAllColorsQuery } = colorApi;
+export const { useGetAllColorsQuery, useGetColorsWithStockByProductIdQuery } =
+  colorApi;

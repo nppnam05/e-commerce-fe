@@ -4,17 +4,11 @@ import type { ProductChildren } from "@/types/product";
 import { useGetAllColorsQuery } from "@/store/api/api-color";
 import { useGetAllSizesQuery } from "@/store/api/api-size";
 import { useUpdateProductChildrenMutation } from "@/store/api/api-product-children";
+import { ColorDot } from "@/components/ui/color-dot";
 
 interface ProductRowProps {
   product: ProductChildren;
 }
-
-const ColorDot = ({ color }: { color: string }) => (
-  <div
-    className="h-5 w-5 rounded-full border border-gray-200 shadow-sm"
-    style={{ backgroundColor: color }}
-  />
-);
 
 export const ProductChildrenRow = ({ product }: ProductRowProps) => {
   const [isEdit, setIsEdit] = useState(false);

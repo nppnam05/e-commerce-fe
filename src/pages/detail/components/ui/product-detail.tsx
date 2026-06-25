@@ -1,87 +1,35 @@
-import { BadgeSelector } from "@/components/ui/badge-selector";
 import { Button } from "@/components/ui/button";
-import { ColorPallete, type ColorInput } from "@/components/ui/color-pallete";
 import { CountSelector } from "@/components/ui/count-selector";
 import { RowDivident } from "@/components/ui/row-divident";
 import { Star } from "@/components/ui/stars";
-import { color_zinc } from "@/consts/colors";
-import { useContext, useState } from "react";
-import colors from "tailwindcss/colors";
-import { DetailContext } from "../context/detail-context";
-
-const colorsInput: ColorInput[] = [
-  {
-    backgroundColor: colors.green[600],
-    outlineColor: colors.green[900],
-    checkColor: colors.white,
-  },
-  {
-    backgroundColor: colors.red[600],
-    outlineColor: colors.red[900],
-    checkColor: colors.white,
-  },
-  {
-    backgroundColor: colors.yellow[600],
-    outlineColor: colors.yellow[900],
-    checkColor: colors.white,
-  },
-  {
-    backgroundColor: colors.orange[600],
-    outlineColor: colors.orange[900],
-    checkColor: colors.white,
-  },
-  {
-    backgroundColor: colors.cyan[600],
-    outlineColor: colors.cyan[900],
-    checkColor: colors.white,
-  },
-  {
-    backgroundColor: colors.blue[600],
-    outlineColor: colors.blue[900],
-    checkColor: colors.white,
-  },
-  {
-    backgroundColor: colors.purple[600],
-    outlineColor: colors.purple[900],
-    checkColor: colors.white,
-  },
-  {
-    backgroundColor: colors.pink[600],
-    outlineColor: colors.pink[900],
-    checkColor: colors.white,
-  },
-  {
-    backgroundColor: colors.white,
-    outlineColor: colors.zinc[300],
-    checkColor: colors.zinc[900],
-  },
-  {
-    backgroundColor: colors.zinc[900],
-    outlineColor: colors.zinc[800],
-    checkColor: colors.white,
-  },
-];
-
-export default function ProductDetail() {
-  const [selectedColor, setSelectedColor] = useState(colors.white);
-
-  const context = useContext(DetailContext);
-  if (context == null) {
-    throw new Error("Detail Context cannot be null");
-  }
-
+import { useDetailPage } from "../../hooks/use-detail-page";
+import { formatVND } from "@/utils/format";
+import { ColorSelector } from "./color-selector";
+import { SelectSize } from "./select-size";
+import { StockDisplay } from "./stock-display";
+export const ProductDetail = () => {
+  const { data, state, actions } = useDetailPage();
   const {
     product,
-    isFetchingProduct,
+    colors = [],
+    sizes = [],
+    selectedColorCode,
+    selectedSizeName,
+    selectedColorId,
+    selectedSizeId,
+    quantity,
     countOrdered,
-    setCountOrdered,
-    createCart,
-    isLoadingCreateCart,
-  } = context;
+  } = data || {};
 
-  return isFetchingProduct ? (
-    <div></div>
-  ) : (
+  if (!product) {
+    return (
+      <div className="flex h-96 items-center justify-center text-lg font-medium">
+        Đang tải thông tin sản phẩm...
+      </div>
+    );
+  }
+
+  return (
     <div className="grid grid-cols-3 grid-rows-7 gap-2 lg:grid-cols-9 lg:grid-rows-3">
       <img
         src={product?.imageUrls[0]}
@@ -101,48 +49,61 @@ export default function ProductDetail() {
       />
       <div className="col-start-1 -col-end-1 row-start-5 -row-end-1 flex flex-col justify-between gap-2 px-4 lg:col-start-5 lg:row-start-1">
         <h1 className="text-5xl font-bold uppercase">{product?.name}</h1>
-        <Star count={4.5} widthSize={30} className="text-yellow-300" />
-        <span className="text-4xl font-bold">${product?.price}</span>
+        <div className="flex items-center gap-2">
+          <Star count={4.5} widthSize={30} className="text-yellow-300" />
+          <span className="text-xl font-medium text-zinc-500">|</span>
+          <span className="text-xl font-medium">100 reviews</span>
+        </div>
+        <span className="text-4xl font-bold">
+          {formatVND(product?.price ?? 0)}
+        </span>
         <span className="text-lg">{product?.description}</span>
         <RowDivident />
-        <div>
-          <div className="mb-2 text-2xl text-zinc-400">Select Colors</div>
-          <ColorPallete
-            colors={colorsInput}
-            valueChanged={setSelectedColor}
-            selectColor={selectedColor}
-            className="flex flex-row flex-wrap gap-4"
-            colorWidthHeight={32}
-          />
-        </div>
+
+        <ColorSelector
+          colors={colors}
+          selectedColorCode={selectedColorCode}
+          onChange={(colorCode) => {
+            const color = colors.find((c) => c.colorCode === colorCode);
+            actions.selectColor(color?.id ?? null);
+          }}
+        />
+
         <RowDivident />
-        <div>
-          <div className="mb-2 text-2xl text-zinc-400">Select Size</div>
-          <BadgeSelector
-            value="Small"
-            texts={["Small", "Medium", "Large", "X-Large"]}
-            defaultTextColor={color_zinc[800]}
-            defaultBackgroundColor={color_zinc[100]}
-            selectedTextColor="#FFFFFF"
-            selectedBackgroundColor="#000000"
-            fontSize={20}
-            gap={8}
-            onChanged={(a) => console.log(a)}
-          />
-        </div>
+
+        <SelectSize
+          sizes={sizes}
+          selectedSize={selectedSizeName}
+          onChange={(sizeName) => {
+            const size = sizes.find((s) => s.name === sizeName);
+            actions.selectSize(size?.id ?? null);
+          }}
+        />
+
+        <StockDisplay quantity={quantity} />
+
         <RowDivident />
         <div className="flex flex-row gap-4">
-          <CountSelector value={countOrdered} onChanged={setCountOrdered} />
+          <CountSelector
+            value={countOrdered}
+            onChanged={actions.setCountOrdered}
+          />
           <Button
             variant="superBlack"
             className="w-full"
-            onClick={createCart}
-            isLoading={isLoadingCreateCart}
+            onClick={() => actions.addToCart(countOrdered)}
+            disabled={
+              state.isAddingToCart ||
+              !selectedColorId ||
+              !selectedSizeId ||
+              !quantity ||
+              quantity <= 0
+            }
           >
-            Add To Cart
+            {state.isAddingToCart ? "Đang thêm..." : "Add To Cart"}
           </Button>
         </div>
       </div>
     </div>
   );
-}
+};

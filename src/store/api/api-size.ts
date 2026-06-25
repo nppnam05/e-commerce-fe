@@ -22,7 +22,22 @@ export const sizeApi = createApi({
         return [];
       },
     }),
+    getSizesWithStockByProductId: builder.query<Size[], number>({
+      query: (productId) => ({
+        url: `/size/product/${productId}`,
+        method: "GET",
+        credentials: "include",
+        providesTags: ["Size"],
+      }),
+      transformResponse: (response: BaseResponse<Size[]>) => {
+        if (response.succeeded && response.data) {
+          return response.data;
+        }
+        return [];
+      },
+    }),
   }),
 });
 
-export const { useGetAllSizesQuery } = sizeApi;
+export const { useGetAllSizesQuery, useGetSizesWithStockByProductIdQuery } =
+  sizeApi;
