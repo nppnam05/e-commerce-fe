@@ -1,4 +1,5 @@
 export const STATUS = {
+  PAI: "PAID",
   PND: "PENDING",
   REJ: "REJECTED",
   SHP: "SHIPPED",
@@ -7,6 +8,7 @@ export const STATUS = {
 } as const;
 
 export const STATUS_TEXT = {
+  PAI: "Đã thanh toán",
   PND: "Đang chờ xử lý",
   REJ: "Đã bị từ chối",
   SHP: "Đang vận chuyển",

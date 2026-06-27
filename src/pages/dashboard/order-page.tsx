@@ -11,6 +11,7 @@ import type { Order } from "@/types/order";
 import { useNavigate } from "react-router-dom";
 
 export const statusOptions = [
+  { value: "PAID", label: "Paid" },
   { value: "PND", label: "Pending" },
   { value: "REJ", label: "Rejected" },
   { value: "SHP", label: "Shipped" },

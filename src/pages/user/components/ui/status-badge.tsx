@@ -3,6 +3,7 @@ import { STATUS_TEXT } from "@/constant/status";
 export const StatusBadge = ({ status }: { status: string }) => {
   const styles = {
     PND: "bg-gray-100 text-gray-700",
+    PAI: "bg-green-100 text-green-700",
     REJ: "bg-red-100 text-red-700",
     COM: "bg-green-100 text-green-700",
     SHP: "bg-blue-100 text-blue-700",
