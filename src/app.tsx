@@ -24,62 +24,82 @@ import { DetailPage } from "./pages/detail/detail-page";
 import CategoryPage from "./pages/category/category-page";
 import { CartPage } from "./pages/cart/cart-page";
 import { ProductChildrenPage } from "./pages/dashboard/product-children-page";
+import { Toaster } from "sonner";
 
 export const App = () => {
   const deviceId = getCookie("deviceId");
-  const { isLoading } = useGetMeQuery(undefined, { skip: !deviceId });
+
+  const { isLoading, data } = useGetMeQuery(undefined, {
+    skip: !deviceId,
+  });
 
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/home" />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
+    <>
+      <Toaster richColors position="top-right" />
+      <Routes>
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
 
-      <Route element={<AppLayout />}>
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/detail/:id" element={<DetailPage />} />
-        <Route path="/category" element={<CategoryPage />} />
-      </Route>
-      {/* User routes */}
-      <Route element={<ProtectedRoute requiredRole="USER" />}>
         <Route element={<AppLayout />}>
-          <Route path="/cart" element={<CartPage />} />
+          <Route
+            path="/home"
+            element={
+              data?.roleName === "ADMIN" ? (
+                <Navigate to="/dashboard" />
+              ) : (
+                <HomePage />
+              )
+            }
+          />
+          <Route path="/detail/:id" element={<DetailPage />} />
+          <Route path="/category" element={<CategoryPage />} />
         </Route>
-        <Route element={<ProfileLayout />}>
-          <Route path="/profile" element={<AccountInfoPage />} />
-          <Route path="/profile/orders" element={<OrdersUserPage />} />
-          <Route path="/profile/favorite" element={<FavoritePage />} />
-          <Route path="/profile/addresses" element={<AddressPage />} />
-          <Route path="/profile/orders/:id" element={<OrderUserDetailPage />} />
-        </Route>
-      </Route>
 
-      {/* Admin routes */}
-      <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
-        <Route element={<DashboardLayout />}>
-          <Route path="/dashboard" element={<MainPage />} />
-          <Route path="/dashboard/products" element={<ProductsPage />} />
-          <Route
-            path="/dashboard/product-children"
-            element={<ProductChildrenPage />}
-          />
-          <Route path="/dashboard/order" element={<OrderPage />} />
-          <Route path="/dashboard/stock" element={<StockPage />} />
-          <Route
-            path="/dashboard/product"
-            element={<ProductPage title="Add Product" />}
-          />
-          <Route
-            path="/dashboard/update-product/:id"
-            element={<EditProductPage />}
-          />
-          <Route path="/dashboard/order/:id" element={<OrderDetailPage />} />
+        {/* User routes */}
+        <Route element={<ProtectedRoute requiredRole="USER" />}>
+          <Route element={<AppLayout />}>
+            <Route path="/cart" element={<CartPage />} />
+          </Route>
+          <Route element={<ProfileLayout />}>
+            <Route path="/profile" element={<AccountInfoPage />} />
+            <Route path="/profile/orders" element={<OrdersUserPage />} />
+            <Route path="/profile/favorite" element={<FavoritePage />} />
+            <Route path="/profile/addresses" element={<AddressPage />} />
+            <Route
+              path="/profile/orders/:id"
+              element={<OrderUserDetailPage />}
+            />
+          </Route>
         </Route>
-      </Route>
 
-      <Route path="*" element={<div>404</div>} />
-    </Routes>
+        {/* Admin routes */}
+        <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
+          <Route element={<DashboardLayout />}>
+            <Route path="/dashboard" element={<MainPage />} />
+            <Route path="/dashboard/products" element={<ProductsPage />} />
+            <Route
+              path="/dashboard/product-children"
+              element={<ProductChildrenPage />}
+            />
+            <Route path="/dashboard/order" element={<OrderPage />} />
+            <Route path="/dashboard/stock" element={<StockPage />} />
+            <Route
+              path="/dashboard/product"
+              element={<ProductPage title="Add Product" />}
+            />
+            <Route
+              path="/dashboard/update-product/:id"
+              element={<EditProductPage />}
+            />
+            <Route path="/dashboard/order/:id" element={<OrderDetailPage />} />
+          </Route>
+        </Route>
+
+        <Route path="*" element={<div>404</div>} />
+      </Routes>
+    </>
   );
 };

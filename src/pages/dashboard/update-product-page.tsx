@@ -10,6 +10,7 @@ import {
   useUpdateProductMutation,
 } from "@/store/api/api-product";
 import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 interface ProductFormData {
   name: string;
@@ -56,25 +57,31 @@ export const EditProductPage = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const categoryId = Number(formData.category);
 
-    try {
-      var result = await updateProduct({
-        id: Number(id),
-        name: formData.name,
-        description: formData.description,
-        price: formData.price,
-        categoryId,
-        images,
-      }).unwrap();
-      if (result) {
+    var result = updateProduct({
+      id: Number(id),
+      name: formData.name,
+      description: formData.description,
+      price: formData.price,
+      categoryId,
+      images,
+    }).unwrap();
+    
+    toast.promise(result, {
+      loading: "Đang xử lý cập nhật sản phẩm...",
+      success: () => {
         window.history.back();
-      }
-    } catch (err) {
-      console.log(err);
-    }
+        return "Cập nhật sản phẩm thành công!";
+      },
+      error: (err) => {
+        return (
+          err?.data?.message || "Cập nhật sản phẩm thất bại. Vui lòng thử lại!"
+        );
+      },
+    });
   };
 
   return (

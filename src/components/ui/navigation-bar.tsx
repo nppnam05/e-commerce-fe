@@ -17,11 +17,7 @@ export function NavigationBar() {
     (state: RootState) => state.auth,
   );
   const handleAvatarClick = () => {
-    if (isAuthenticated) {
-      navigate("/profile");
-    } else {
-      navigate("/login");
-    }
+    navigate("/profile");
   };
 
   const handleShopClick = () => {

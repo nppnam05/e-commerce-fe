@@ -15,3 +15,8 @@ export const STATUS_TEXT = {
   COM: "Đã giao hàng",
   CNL: "Đã hủy",
 };
+
+export const ROLE = {
+  ADMIN: "ADMIN",
+  USER: "USER"
+}

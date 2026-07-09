@@ -1,11 +1,5 @@
-import {
-  Package,
-  Heart,
-  MapPin,
-  User,
-  LogOut,
-  Settings,
-} from "lucide-react";
+import { useLogoutMutation } from "@/store/api/api-auth";
+import { Package, Heart, MapPin, User, LogOut, Settings } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const menuItems = [
@@ -39,8 +33,11 @@ export const SidebarProfile = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const [logout] = useLogoutMutation();
+
   const handleLogout = (e: React.MouseEvent) => {
     e.preventDefault();
+    logout().unwrap();
     navigate("/login", { replace: true });
   };
 

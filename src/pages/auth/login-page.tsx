@@ -9,6 +9,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { GoogleButton } from "@/components/ui/button-google";
 import { safeLocalStorage } from "@/utils/localStorage";
 import { setCookie } from "@/lib/utils";
+import { ROLE } from "@/constant/status";
+import { toast } from "sonner";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
@@ -18,28 +20,33 @@ export const LoginPage = () => {
 
   const [signIn] = useSignInMutation();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
     const deviceId = safeLocalStorage.getItem("deviceId");
     if (deviceId) {
       setCookie("deviceId", deviceId, 365);
     }
-    try {
-      const result = await signIn({ email, password }).unwrap();
-      if (result) {
+
+    const loginPromise = signIn({ email, password }).unwrap();
+    toast.promise(loginPromise, {
+      loading: "Đang xử lý đăng nhập...",
+      success: (result) => {
         safeLocalStorage.setItem("deviceId", result.deviceId || "");
         setCookie("deviceId", result.deviceId || "", 365);
         dispatch(login(result));
-        if (result.roleName === "ADMIN") {
+        if (result.roleName === ROLE.ADMIN) {
           navigate("/dashboard");
         } else {
           navigate("/home");
         }
-      }
-    } catch (err) {
-      // Bỏ qua hoặc xử lý lỗi nếu cần thiết
-    }
+
+        return "Đăng nhập thành công!";
+      },
+      error: (err) => {
+        return err?.data?.message || "Đăng nhập thất bại. Vui lòng thử lại!";
+      },
+    });
   };
 
   return (

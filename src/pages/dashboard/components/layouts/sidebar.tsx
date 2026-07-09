@@ -10,11 +10,16 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLogoutMutation } from "@/store/api/api-auth";
 
 const menuItems = [
   { icon: Home, label: "Dashboard", path: "/dashboard" },
   { icon: Package, label: "Products", path: "/dashboard/products" },
-  { icon: Package, label: "Product children", path: "/dashboard/product-children" },
+  {
+    icon: Package,
+    label: "Product children",
+    path: "/dashboard/product-children",
+  },
   { icon: List, label: "Orders", path: "/dashboard/order" },
   { icon: BarChart3, label: "Product Stock", path: "/dashboard/stock" },
 ];
@@ -24,9 +29,11 @@ export const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogout = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const [logout] = useLogoutMutation();
 
+  const handleLogout = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    await logout().unwrap();
     navigate("/login", { replace: true });
   };
 

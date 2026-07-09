@@ -40,7 +40,7 @@ export const customBaseQueryWithReauth: BaseQueryFn<
           { url: "/auth/refresh", method: "POST", credentials: "include" },
           api,
           extraOptions,
-        )
+        ),
       ).finally(() => {
         refreshPromise = null;
       });
@@ -49,17 +49,14 @@ export const customBaseQueryWithReauth: BaseQueryFn<
     const refreshResult = await refreshPromise;
 
     if (refreshResult.error) {
-      if (
-        typeof window !== "undefined" &&
-        window.location.pathname !== "/login"
-      ) {
-        window.location.href = "/login";
+      if (typeof window !== "undefined" && window.location.pathname !== "/") {
+        window.location.href = "/";
       }
       return refreshResult;
     }
 
     result = await baseQuery(args, api, extraOptions);
-  }  // ← đóng if 401
+  } // ← đóng if 401
 
-  return result;  // ← return cuối
+  return result; // ← return cuối
 };

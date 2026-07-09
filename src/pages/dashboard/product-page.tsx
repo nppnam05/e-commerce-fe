@@ -6,6 +6,7 @@ import { Select } from "./components/ui/select";
 import { useGetAllCategoriesQuery } from "@/store/api/api-category";
 import { ImageUpload } from "./components/ui/ImageUpload";
 import { useCreateProductMutation } from "@/store/api/api-product";
+import { toast } from "sonner";
 
 interface ProductFormData {
   name: string;
@@ -40,29 +41,46 @@ export const ProductPage = ({ title }: { title: string }) => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const categoryId = Number(formData.category);
-    try {
-      await createProduct({
-        name: formData.name,
-        description: formData.description,
-        price: formData.price,
-        categoryId,
-        images: images,
-      }).unwrap();
-      setFormData({
-        name: "",
-        description: "",
-        price: 0,
-        category: "",
-      });
-      setImages([]);
-      setUploadKey((prev) => prev + 1);
-    } catch (err) {
-      console.log(err);
-    }
+
+    const createProductPromise = createProduct({
+      name: formData.name,
+      description: formData.description,
+      price: formData.price,
+      categoryId,
+      images: images,
+    }).unwrap();
+    toast.promise(createProductPromise, {
+      loading: "Đang xử lý thêm sản phẩm...",
+      success: () => {
+        setFormData({
+          name: "",
+          description: "",
+          price: 0,
+          category: "",
+        });
+        setImages([]);
+        setUploadKey((prev) => prev + 1);
+
+        return "Thêm sản phẩm thành công!";
+      },
+      error: (err) => {
+        return (
+          err?.data?.message || "Thêm sản phẩm thất bại. Vui lòng thử lại!"
+        );
+      },
+    });
+    setFormData({
+      name: "",
+      description: "",
+      price: 0,
+      category: "",
+    });
+    setImages([]);
+    setUploadKey((prev) => prev + 1);
   };
 
   return (

@@ -2,6 +2,7 @@
 import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import type { RootState } from "@/store";
+import { ROLE } from "@/constant/status";
 
 interface ProtectedRouteProps {
   requiredRole?: "ADMIN" | "USER";
@@ -19,8 +20,8 @@ export const ProtectedRoute = ({
   if (!isAuthenticated) return <Navigate to={redirectTo} />;
 
   if (requiredRole && user?.roleName !== requiredRole) {
-    if (user?.roleName === "ADMIN") return <Navigate to="/dashboard" />;
-    else if (user?.roleName === "USER") return <Navigate to="/home" />;
+    if (user?.roleName === ROLE.ADMIN) return <Navigate to="/dashboard" />;
+    else if (user?.roleName === ROLE.USER) return <Navigate to="/home" />;
     return <Navigate to="/login" />;
   }
 

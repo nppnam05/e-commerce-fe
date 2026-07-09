@@ -49,7 +49,15 @@ export const authApi = createApi({
         throw new Error(response.message ?? "Registration failed");
       },
     }),
+    logout: builder.mutation<void, void>({
+      query: () => ({
+        url: "/auth/logout",
+        method: "POST",
+        credentials: "include",
+      }),
+      invalidatesTags: ["Auth", { type: "UserProfile" }],
+    }),
   }),
 });
 
-export const { useSignInMutation, useRegisterMutation } = authApi;
+export const { useSignInMutation, useRegisterMutation, useLogoutMutation } = authApi;
